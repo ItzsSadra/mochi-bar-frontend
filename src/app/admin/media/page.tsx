@@ -16,13 +16,19 @@ export default function AdminMediaPage() {
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const t = setTimeout(() => setDebouncedSearch(search), 300);
+    return () => clearTimeout(t);
+  }, [search]);
 
   const loadData = async () => {
     try {
       setLoading(true);
       const [mediaData, folderData] = await Promise.all([
-        api.getMedia({ folder: selectedFolder || undefined, search: search || undefined }),
+        api.getMedia({ folder: selectedFolder || undefined, search: debouncedSearch || undefined }),
         api.getMediaFolders(),
       ]);
       setMedia(mediaData.media);
@@ -36,7 +42,7 @@ export default function AdminMediaPage() {
 
   useEffect(() => {
     loadData();
-  }, [selectedFolder, search]);
+  }, [selectedFolder, debouncedSearch]);
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;

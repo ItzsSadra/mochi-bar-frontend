@@ -27,7 +27,7 @@ export default function Footer() {
       if (contact.phone) setPhone(contact.phone);
       if (contact.instagram) setInstagram(contact.instagram);
       if (footer.footer_text) setFooterText(footer.footer_text);
-    });
+    }).catch(() => {});
   }, []);
 
   return (

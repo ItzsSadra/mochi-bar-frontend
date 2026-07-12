@@ -37,9 +37,11 @@ class ApiClient {
   ): Promise<T> {
     const token = this.getToken();
     const existingHeaders = options.headers;
-    const mergedHeaders: Record<string, string> = {
-      "Content-Type": "application/json",
-    };
+    const mergedHeaders: Record<string, string> = {};
+
+    if (options.body) {
+      mergedHeaders["Content-Type"] = "application/json";
+    }
 
     if (existingHeaders && !(existingHeaders instanceof Headers)) {
       Object.assign(mergedHeaders, existingHeaders);

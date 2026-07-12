@@ -12,7 +12,7 @@ export default function FeaturedMenu() {
   const [items, setItems] = useState<MenuItem[]>([]);
 
   useEffect(() => {
-    api.getMenu({ featured: true }).then((data) => setItems(data.items.slice(0, 4)));
+    api.getMenu({ featured: true }).then((data) => setItems(data.items.slice(0, 4))).catch(() => {});
   }, []);
 
   return (

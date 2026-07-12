@@ -14,7 +14,7 @@ export default function Hero() {
       const hero = data.settings.hero || {};
       if (hero.hero_text) setHeroText(hero.hero_text);
       if (hero.hero_subtext) setHeroSubtext(hero.hero_subtext);
-    });
+    }).catch(() => {});
   }, []);
 
   return (
@@ -93,6 +93,10 @@ export default function Hero() {
                 src="/images/hero.png"
                 alt="موچی دست ساز"
                 className="absolute inset-3 rounded-[1.75rem] object-cover w-[calc(100%-24px)] h-[calc(100%-24px)]"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  target.style.display = "none";
+                }}
               />
 
               <div className="absolute -right-3 top-10 rounded-xl border border-white/60 bg-white/90 p-3 shadow-soft backdrop-blur-sm dark:border-white/10 dark:bg-white/10">

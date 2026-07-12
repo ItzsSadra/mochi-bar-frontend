@@ -10,7 +10,7 @@ export default function GalleryPreview() {
   const [images, setImages] = useState<GalleryImage[]>([]);
 
   useEffect(() => {
-    api.getGallery().then((data) => setImages(data.images.slice(0, 6)));
+    api.getGallery().then((data) => setImages(data.images.slice(0, 6))).catch(() => {});
   }, []);
 
   return (

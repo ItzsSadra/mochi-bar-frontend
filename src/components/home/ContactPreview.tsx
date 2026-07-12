@@ -19,7 +19,7 @@ export default function ContactPreview() {
       if (contact.phone) setPhone(contact.phone);
       if (contact.instagram) setInstagram(contact.instagram);
       if (contact.working_hours) setWorkingHours(contact.working_hours);
-    });
+    }).catch(() => {});
   }, []);
 
   return (
