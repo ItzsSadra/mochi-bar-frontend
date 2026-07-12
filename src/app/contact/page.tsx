@@ -71,7 +71,7 @@ export default function ContactPage() {
               transition={{ delay: 0.2 }}
               className="overflow-hidden rounded-2xl bg-gray-100 dark:bg-white/[0.03]"
             >
-              <div className="min-h-[460px] w-full overflow-hidden rounded-2xl bg-gray-200 dark:bg-gray-800">
+              <div className="min-h-[260px] w-full overflow-hidden rounded-2xl bg-gray-200 dark:bg-gray-800 sm:min-h-[460px]">
                 <img
                   src="/images/map-placeholder.png"
                   alt="موقعیت موچی بار روی نقشه"

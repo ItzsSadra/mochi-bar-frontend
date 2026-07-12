@@ -134,7 +134,7 @@ export default function AdminDashboard() {
           <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
             آخرین تصاویر گالری
           </h3>
-          <div className="mt-3.5 grid grid-cols-3 gap-2">
+          <div className="mt-3.5 grid grid-cols-2 gap-2 sm:grid-cols-3">
             {recentGallery.map((img) => (
               <div
                 key={img.id}

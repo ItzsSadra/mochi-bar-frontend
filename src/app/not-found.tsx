@@ -4,7 +4,7 @@ export default function NotFound() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-cream-50 dark:bg-[#0c0c18]">
       <div className="text-center">
-        <p className="text-7xl font-bold text-matcha-400">۴۰۴</p>
+        <p className="text-6xl font-bold text-matcha-400 sm:text-7xl">۴۰۴</p>
         <h2 className="mt-4 text-lg font-bold text-gray-900 dark:text-white">
           صفحه یافت نشد
         </h2>

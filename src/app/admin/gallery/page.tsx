@@ -117,7 +117,7 @@ export default function AdminGalleryPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h1 className="text-lg font-bold text-gray-900 dark:text-white">گالری</h1>
           <p className="mt-0.5 text-xs text-gray-400 dark:text-gray-500">

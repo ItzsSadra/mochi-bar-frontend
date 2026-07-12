@@ -14,7 +14,7 @@ export default function GalleryPreview() {
   }, []);
 
   return (
-    <section className="py-20 bg-white dark:bg-[#0c0c18]">
+    <section className="py-12 bg-white dark:bg-[#0c0c18] sm:py-20">
       <div className="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -29,7 +29,7 @@ export default function GalleryPreview() {
           </p>
         </motion.div>
 
-        <div className="mt-14 grid grid-cols-2 gap-3 md:grid-cols-3 lg:gap-4">
+        <div className="mt-8 grid grid-cols-2 gap-3 sm:mt-14 md:grid-cols-3 lg:gap-4">
           {images.map((image, index) => (
             <motion.div
               key={image.id}

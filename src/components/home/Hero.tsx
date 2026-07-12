@@ -58,13 +58,13 @@ export default function Hero() {
               </Link>
             </div>
 
-            <div className="mt-12 flex items-center gap-7">
+            <div className="mt-12 flex flex-wrap items-center gap-6 sm:gap-7">
               {[
                 { value: "۵۰+", label: "نوع نوشیدنی" },
                 { value: "۳۰+", label: "نوع دسر" },
                 { value: "۱۰۰۰+", label: "مشتری راضی" },
               ].map((stat, i) => (
-                <div key={i} className="flex items-center gap-7">
+                <div key={i} className="flex items-center gap-6 sm:gap-7">
                   <div>
                     <p className="text-2xl font-bold text-matcha-500 dark:text-matcha-400">
                       {stat.value}

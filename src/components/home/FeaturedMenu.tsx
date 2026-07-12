@@ -16,7 +16,7 @@ export default function FeaturedMenu() {
   }, []);
 
   return (
-    <section className="py-20 bg-white dark:bg-[#0c0c18]">
+    <section className="py-12 bg-white dark:bg-[#0c0c18] sm:py-20">
       <div className="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -31,7 +31,7 @@ export default function FeaturedMenu() {
           </p>
         </motion.div>
 
-        <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-8 grid grid-cols-1 gap-5 sm:mt-14 sm:grid-cols-2 lg:grid-cols-4">
           {items.map((item, index) => (
             <motion.div
               key={item.id}

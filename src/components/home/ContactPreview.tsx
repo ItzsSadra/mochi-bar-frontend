@@ -23,7 +23,7 @@ export default function ContactPreview() {
   }, []);
 
   return (
-    <section className="py-20 bg-white dark:bg-[#0c0c18]">
+    <section className="py-12 bg-white dark:bg-[#0c0c18] sm:py-20">
       <div className="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
           <motion.div
@@ -69,7 +69,7 @@ export default function ContactPreview() {
             <img
               src="/images/map-placeholder.png"
               alt="موقعیت موچی بار روی نقشه"
-              className="h-full min-h-[360px] w-full object-cover"
+              className="h-full min-h-[240px] w-full object-cover sm:min-h-[360px]"
             />
           </motion.div>
         </div>
