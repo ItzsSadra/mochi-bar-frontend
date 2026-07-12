@@ -10,6 +10,7 @@ out/
 *.pem
 .env
 .env.local
+.env.local.development
 .env.development.local
 .env.test.local
 .env.production.local
