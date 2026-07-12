@@ -177,9 +177,17 @@ export default function AdminMenuPage() {
                 <tr key={item.id} className="transition-colors hover:bg-gray-50/50 dark:hover:bg-white/[0.01]">
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2.5">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-matcha-50 text-sm dark:bg-matcha-900/30">
-                        🍡
-                      </div>
+                      {item.image_url ? (
+                        <img
+                          src={getImageUrl(item.image_url)}
+                          alt={item.name}
+                          className="h-8 w-8 rounded-lg object-cover"
+                        />
+                      ) : (
+                        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-matcha-50 text-sm dark:bg-matcha-900/30">
+                          🍡
+                        </div>
+                      )}
                       <div>
                         <p className="text-sm font-medium text-gray-800 dark:text-white">{item.name}</p>
                         <div className="flex gap-1.5">

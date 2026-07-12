@@ -89,16 +89,11 @@ export default function Hero() {
           >
             <div className="relative mx-auto aspect-square max-w-[420px]">
               <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-br from-matcha-100/80 to-sakura-100/40 dark:from-matcha-900/30 dark:to-sakura-900/20" />
-              <div className="absolute inset-3 rounded-[1.75rem] bg-gradient-to-br from-matcha-50/60 to-sakura-50/30 backdrop-blur-xl dark:from-matcha-900/20 dark:to-sakura-900/10" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <motion.div
-                  animate={{ y: [0, -8, 0] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                  className="text-8xl"
-                >
-                  🍡
-                </motion.div>
-              </div>
+              <img
+                src="/images/hero.png"
+                alt="موچی دست ساز"
+                className="absolute inset-3 rounded-[1.75rem] object-cover w-[calc(100%-24px)] h-[calc(100%-24px)]"
+              />
 
               <div className="absolute -right-3 top-10 rounded-xl border border-white/60 bg-white/90 p-3 shadow-soft backdrop-blur-sm dark:border-white/10 dark:bg-white/10">
                 <div className="flex items-center gap-2.5">

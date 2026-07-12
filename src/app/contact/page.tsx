@@ -71,11 +71,12 @@ export default function ContactPage() {
               transition={{ delay: 0.2 }}
               className="overflow-hidden rounded-2xl bg-gray-100 dark:bg-white/[0.03]"
             >
-              <div className="min-h-[260px] w-full overflow-hidden rounded-2xl bg-gray-200 dark:bg-gray-800 sm:min-h-[460px]">
-                <img
-                  src="/images/map-placeholder.png"
-                  alt="موقعیت موچی بار روی نقشه"
-                  className="h-full w-full object-cover"
+              <div className="h-full min-h-[260px] w-full overflow-hidden rounded-2xl sm:min-h-[460px]">
+                <iframe
+                  src="https://www.openstreetmap.org/export/embed.html?bbox=51.6373%2C32.7020%2C51.6473%2C32.7120&layer=mapnik&marker=32.70703450108918%2C51.64230863500501"
+                  className="h-full w-full border-0"
+                  title="موقعیت موچی بار روی نقشه"
+                  loading="lazy"
                 />
               </div>
             </motion.div>
