@@ -52,11 +52,12 @@ function MenuContent() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-cream-50 pt-20 dark:bg-[#0c0c18]">
+      <main className="min-h-screen pt-24" style={{ background: "var(--background)" }}>
         <div className="mx-auto max-w-6xl px-5 py-12 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
             className="text-center"
           >
             <h1 className="section-title">منوی ما</h1>
@@ -65,7 +66,7 @@ function MenuContent() {
             </p>
           </motion.div>
 
-          <div className="mt-8">
+          <div className="mt-10">
             <MenuFilters
               categories={categories}
               selectedCategory={selectedCategory}
@@ -75,9 +76,9 @@ function MenuContent() {
             />
           </div>
 
-          <div className="mt-6">
+          <div className="mt-8">
             {loading ? (
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {Array.from({ length: 8 }).map((_, i) => (
                   <MenuCardSkeleton key={i} />
                 ))}
@@ -85,12 +86,12 @@ function MenuContent() {
             ) : items.length === 0 ? (
               <div className="py-20 text-center">
                 <p className="text-5xl">🍵</p>
-                <p className="mt-3 text-sm text-gray-400">
+                <p className="mt-4 text-sm" style={{ color: "var(--muted)" }}>
                   آیتمی یافت نشد
                 </p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {items.map((item) => (
                   <MenuCard key={item.id} item={item} />
                 ))}
@@ -108,13 +109,13 @@ export default function MenuPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-cream-50 pt-20 dark:bg-[#0c0c18]">
+        <div className="min-h-screen pt-24" style={{ background: "var(--background)" }}>
           <div className="mx-auto max-w-6xl px-5 py-12 sm:px-6 lg:px-8">
             <div className="text-center">
-              <div className="mx-auto h-8 w-32 animate-pulse rounded-xl bg-gray-200 dark:bg-white/5" />
-              <div className="mx-auto mt-3 h-4 w-64 animate-pulse rounded-lg bg-gray-200 dark:bg-white/5" />
+              <div className="mx-auto h-8 w-32 animate-pulse rounded-full" style={{ background: "rgba(0,0,0,0.04)" }} />
+              <div className="mx-auto mt-3 h-4 w-64 animate-pulse rounded-full" style={{ background: "rgba(0,0,0,0.04)" }} />
             </div>
-            <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {Array.from({ length: 8 }).map((_, i) => (
                 <MenuCardSkeleton key={i} />
               ))}

@@ -21,8 +21,9 @@ export default function GalleryGrid({ images }: GalleryGridProps) {
             key={image.id}
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.04 }}
-            className="group cursor-pointer overflow-hidden rounded-xl"
+            transition={{ delay: index * 0.03, duration: 0.5 }}
+            className="group cursor-pointer overflow-hidden rounded-2xl"
+            style={{ border: "0.5px solid var(--border-subtle)" }}
             role="button"
             tabIndex={0}
             onClick={() => setSelected(image)}
@@ -31,7 +32,7 @@ export default function GalleryGrid({ images }: GalleryGridProps) {
             <img
               src={getImageUrl(image.image_url)}
               alt={image.title || image.caption || ""}
-              className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              className="aspect-square w-full object-cover transition-transform duration-700 group-hover:scale-105"
               loading="lazy"
             />
           </motion.div>
@@ -44,27 +45,31 @@ export default function GalleryGrid({ images }: GalleryGridProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-2xl"
+            style={{ background: "rgba(0,0,0,0.6)" }}
             onClick={() => setSelected(null)}
             role="dialog"
             aria-modal="true"
             aria-label="تصویر بزرگ"
           >
             <button
-              className="absolute left-4 top-4 rounded-full bg-white/10 p-2 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+              className="absolute left-4 top-4 rounded-full p-2.5 text-white transition-colors"
+              style={{ background: "rgba(255,255,255,0.1)", backdropFilter: "blur(20px)" }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.2)")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.1)")}
               onClick={() => setSelected(null)}
               aria-label="بستن"
             >
-              <HiXMark size={22} />
+              <HiXMark size={20} />
             </button>
             <motion.img
-              initial={{ scale: 0.95, opacity: 0 }}
+              initial={{ scale: 0.94, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              transition={{ duration: 0.2 }}
+              exit={{ scale: 0.94, opacity: 0 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
               src={getImageUrl(selected.image_url)}
               alt={selected.title || ""}
-              className="max-h-[85vh] max-w-full rounded-2xl object-contain"
+              className="max-h-[85vh] max-w-full rounded-3xl object-contain"
               onClick={(e) => e.stopPropagation()}
             />
             {(selected.title || selected.caption) && (
@@ -73,7 +78,7 @@ export default function GalleryGrid({ images }: GalleryGridProps) {
                   <h3 className="text-lg font-semibold">{selected.title}</h3>
                 )}
                 {selected.caption && (
-                  <p className="mt-1 text-sm text-gray-300">{selected.caption}</p>
+                  <p className="mt-1 text-sm text-white/60">{selected.caption}</p>
                 )}
               </div>
             )}

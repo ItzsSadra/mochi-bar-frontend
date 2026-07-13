@@ -26,11 +26,12 @@ export default function ContactPageClient() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-cream-50 pt-20 dark:bg-[#0c0c18]">
+      <main className="min-h-screen pt-24" style={{ background: "var(--background)" }}>
         <div className="mx-auto max-w-6xl px-5 py-12 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
             className="text-center"
           >
             <h1 className="section-title">تماس با ما</h1>
@@ -43,39 +44,46 @@ export default function ContactPageClient() {
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.15 }}
+              transition={{ delay: 0.15, duration: 0.5 }}
               className="space-y-4"
             >
               {contactItems.map((item, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, y: 12 }}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 + i * 0.06 }}
+                  transition={{ delay: 0.2 + i * 0.05 }}
                 >
                   {item.href ? (
                     <a
                       href={item.href}
                       target={item.href.startsWith("http") ? "_blank" : undefined}
                       rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                      className="flex items-center gap-3.5 rounded-xl border border-gray-100 bg-white p-4 transition-all hover:shadow-soft dark:border-white/5 dark:bg-white/[0.02] dark:hover:bg-white/[0.04]"
+                      className="glass-card flex items-center gap-3.5 p-4 transition-all duration-300"
+                      style={{ borderRadius: "1rem" }}
                     >
-                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-matcha-50 text-matcha-500 dark:bg-matcha-900/30 dark:text-matcha-400">
+                      <div
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-matcha-500"
+                        style={{ background: "rgba(107,143,113,0.08)" }}
+                      >
                         <item.icon size={16} />
                       </div>
                       <div>
-                        <p className="text-2xs text-gray-400 dark:text-gray-500">{item.label}</p>
-                        <p className="text-sm font-medium text-gray-800 dark:text-white">{item.value}</p>
+                        <p className="text-2xs" style={{ color: "var(--muted)" }}>{item.label}</p>
+                        <p className="text-sm font-medium" style={{ color: "var(--foreground)" }}>{item.value}</p>
                       </div>
                     </a>
                   ) : (
-                    <div className="flex items-center gap-3.5 rounded-xl border border-gray-100 bg-white p-4 dark:border-white/5 dark:bg-white/[0.02]">
-                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-matcha-50 text-matcha-500 dark:bg-matcha-900/30 dark:text-matcha-400">
+                    <div className="glass-card flex items-center gap-3.5 p-4" style={{ borderRadius: "1rem" }}>
+                      <div
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-matcha-500"
+                        style={{ background: "rgba(107,143,113,0.08)" }}
+                      >
                         <item.icon size={16} />
                       </div>
                       <div>
-                        <p className="text-2xs text-gray-400 dark:text-gray-500">{item.label}</p>
-                        <p className="text-sm font-medium text-gray-800 dark:text-white">{item.value}</p>
+                        <p className="text-2xs" style={{ color: "var(--muted)" }}>{item.label}</p>
+                        <p className="text-sm font-medium" style={{ color: "var(--foreground)" }}>{item.value}</p>
                       </div>
                     </div>
                   )}
@@ -86,10 +94,11 @@ export default function ContactPageClient() {
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2 }}
-              className="overflow-hidden rounded-2xl bg-gray-100 dark:bg-white/[0.03]"
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="overflow-hidden rounded-[2rem]"
+              style={{ border: "0.5px solid var(--border-subtle)" }}
             >
-              <div className="h-full min-h-[200px] w-full overflow-hidden rounded-2xl sm:min-h-[260px]">
+              <div className="h-full min-h-[220px] w-full overflow-hidden sm:min-h-[280px]">
                 <iframe
                   src="https://www.openstreetmap.org/export/embed.html?bbox=51.6373%2C32.7020%2C51.6473%2C32.7120&layer=mapnik&marker=32.70703450108918%2C51.64230863500501"
                   className="h-full w-full border-0"

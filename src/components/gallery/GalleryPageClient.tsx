@@ -24,11 +24,12 @@ export default function GalleryPageClient() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-cream-50 pt-20 dark:bg-[#0c0c18]">
+      <main className="min-h-screen pt-24" style={{ background: "var(--background)" }}>
         <div className="mx-auto max-w-6xl px-5 py-12 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
             className="text-center"
           >
             <h1 className="section-title">گالری</h1>
@@ -37,18 +38,18 @@ export default function GalleryPageClient() {
             </p>
           </motion.div>
 
-          <div className="mt-10">
+          <div className="mt-12">
             {loading ? (
               <GallerySkeleton />
             ) : error ? (
               <div className="py-20 text-center">
                 <p className="text-5xl">⚠️</p>
-                <p className="mt-3 text-sm text-red-400">{error}</p>
+                <p className="mt-4 text-sm text-red-400">{error}</p>
               </div>
             ) : images.length === 0 ? (
               <div className="py-20 text-center">
                 <p className="text-5xl">📸</p>
-                <p className="mt-3 text-sm text-gray-400">
+                <p className="mt-4 text-sm" style={{ color: "var(--muted)" }}>
                   تصویری یافت نشد
                 </p>
               </div>

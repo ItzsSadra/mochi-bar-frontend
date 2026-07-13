@@ -25,11 +25,12 @@ export default function MenuFilters({
             placeholder="جستجو در منو..."
             value={search}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="input-field pl-9"
+            className="input-field pl-10"
             aria-label="جستجو در منو"
           />
         <svg
-          className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400"
+          className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2"
+          style={{ color: "var(--muted)" }}
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -39,14 +40,15 @@ export default function MenuFilters({
         </svg>
       </div>
 
-      <div className="flex flex-wrap gap-1.5">
+      <div className="flex flex-wrap gap-2">
         <button
           onClick={() => onCategoryChange("")}
-          className={`rounded-lg px-3.5 py-1.5 text-xs font-medium transition-all duration-200 ${
-            selectedCategory === ""
-              ? "bg-matcha-400 text-white shadow-sm"
-              : "bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-white/5 dark:text-gray-400 dark:hover:bg-white/10"
-          }`}
+          className="rounded-full px-4 py-2 text-xs font-medium transition-all duration-300"
+          style={{
+            background: selectedCategory === "" ? "#6B8F71" : "rgba(0,0,0,0.04)",
+            color: selectedCategory === "" ? "#fff" : "var(--muted)",
+            boxShadow: selectedCategory === "" ? "0 2px 8px rgba(107,143,113,0.25)" : "none",
+          }}
         >
           همه
         </button>
@@ -54,11 +56,12 @@ export default function MenuFilters({
           <button
             key={cat.id}
             onClick={() => onCategoryChange(cat.slug)}
-            className={`rounded-lg px-3.5 py-1.5 text-xs font-medium transition-all duration-200 ${
-              selectedCategory === cat.slug
-                ? "bg-matcha-400 text-white shadow-sm"
-                : "bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-white/5 dark:text-gray-400 dark:hover:bg-white/10"
-            }`}
+            className="rounded-full px-4 py-2 text-xs font-medium transition-all duration-300"
+            style={{
+              background: selectedCategory === cat.slug ? "#6B8F71" : "rgba(0,0,0,0.04)",
+              color: selectedCategory === cat.slug ? "#fff" : "var(--muted)",
+              boxShadow: selectedCategory === cat.slug ? "0 2px 8px rgba(107,143,113,0.25)" : "none",
+            }}
           >
             {cat.icon && <span className="ml-1">{cat.icon}</span>}
             {cat.name}

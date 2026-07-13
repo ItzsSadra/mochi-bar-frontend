@@ -70,7 +70,8 @@ export default function Modal({ isOpen, onClose, title, children, size = "md" }:
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+            className="absolute inset-0 backdrop-blur-xl"
+            style={{ background: "rgba(0,0,0,0.3)" }}
             onClick={onClose}
             aria-hidden="true"
           />
@@ -78,20 +79,31 @@ export default function Modal({ isOpen, onClose, title, children, size = "md" }:
             initial={{ opacity: 0, scale: 0.96, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 20 }}
-            transition={{ duration: 0.2 }}
-            className={`relative w-full ${sizeClasses[size]} max-h-[90vh] overflow-hidden rounded-t-2xl bg-white shadow-xl sm:rounded-2xl dark:bg-gray-900`}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className={`glass-card relative w-full ${sizeClasses[size]} max-h-[90vh] overflow-hidden shadow-glass-lg sm:rounded-2xl`}
+            style={{ borderRadius: "1.25rem" }}
             role="dialog"
             aria-modal="true"
             aria-label={title}
           >
-            <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-100 bg-white px-6 py-4 sm:px-6 dark:border-white/5 dark:bg-gray-900">
-              <h3 className="text-base font-semibold text-gray-900 dark:text-white">
+            <div
+              className="sticky top-0 z-10 flex items-center justify-between px-6 py-4"
+              style={{ borderBottom: "0.5px solid var(--border-subtle)" }}
+            >
+              <h3 className="text-base font-semibold" style={{ color: "var(--foreground)" }}>
                 {title}
               </h3>
               <button
                 ref={closeButtonRef}
                 onClick={onClose}
-                className="rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-white/5"
+                className="rounded-full p-2 transition-colors"
+                style={{ color: "var(--muted)" }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "rgba(0,0,0,0.04)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "transparent";
+                }}
                 aria-label="بستن"
               >
                 <HiXMark size={18} />
