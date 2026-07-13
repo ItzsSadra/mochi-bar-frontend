@@ -6,20 +6,77 @@ import Link from "next/link";
 
 export default function AboutPreview() {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: true, margin: "-40px" });
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const imageY = useTransform(scrollYProgress, [0, 1], [40, -40]);
 
   return (
-    <section ref={ref} className="relative py-24 sm:py-32 overflow-hidden" style={{ background: "var(--background)" }}>
-      {/* Background accent */}
+    <section ref={ref} className="relative py-16 sm:py-24 lg:py-32 overflow-hidden" style={{ background: "var(--background)" }}>
       <div className="absolute inset-0">
-        <div className="absolute -left-40 top-0 h-[600px] w-[600px] rounded-full" style={{ background: "radial-gradient(circle, rgba(107,143,113,0.04) 0%, transparent 70%)", filter: "blur(80px)" }} />
+        <div className="absolute -left-20 top-0 h-[300px] w-[300px] sm:h-[600px] sm:w-[600px] rounded-full" style={{ background: "radial-gradient(circle, rgba(107,143,113,0.04) 0%, transparent 70%)", filter: "blur(60px)" }} />
       </div>
 
       <div className="relative mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
-          {/* Image side */}
+        {/* ─── Mobile Layout: Stacked vertical ─── */}
+        <div className="sm:hidden">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="text-center"
+          >
+            <span className="section-label">داستان ما</span>
+            <h2 className="section-title mt-2.5">هنر و طعم در هر لقمه</h2>
+          </motion.div>
+
+          {/* Feature cards — horizontal scroll */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.1, duration: 0.6 }}
+            className="mt-7 flex gap-3 overflow-x-auto pb-2 -mx-5 px-5 scrollbar-none snap-x snap-mandatory"
+          >
+            {[
+              { num: "01", icon: "🍡", title: "دست‌ساز", desc: "تمام محصولات با دست تهیه می‌شوند" },
+              { num: "02", icon: "🌿", title: "ارگانیک", desc: "مواد اولیه طبیعی و تازه" },
+              { num: "03", icon: "🎨", title: "هنری", desc: "طراحی زیبا در هر جزئیات" },
+              { num: "04", icon: "💝", title: "عشق", desc: "با عشق برای شما تهیه شده" },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 12 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.15 + i * 0.06, duration: 0.5 }}
+                className="glass-card flex-shrink-0 snap-start p-4"
+                style={{ width: "min(65vw, 240px)" }}
+              >
+                <div className="flex h-10 w-10 items-center justify-center rounded-2xl text-base" style={{ background: "var(--matcha-light)" }}>{item.icon}</div>
+                <p className="mt-3 text-[0.8125rem] font-semibold" style={{ color: "var(--foreground)" }}>{item.title}</p>
+                <p className="mt-1 text-[0.75rem] leading-relaxed" style={{ color: "var(--muted)" }}>{item.desc}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Text */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="mt-7"
+          >
+            <p className="text-[0.8125rem] leading-[1.85]" style={{ color: "var(--muted)" }}>
+              موچی بار با الهام از هنر و فرهنگ ژاپنی، فضایی آرام و متفاوت برای
+              لحظات شما خلق کرده است. ما با استفاده از بهترین مواد اولیه و
+              تکنیک‌های نوین، نوشیدنی‌ها و دسرهایی منحصربه‌فرد ارائه می‌دهیم.
+            </p>
+            <Link href="/about" className="btn-primary mt-6 inline-flex">
+              درباره ما بیشتر بدانید
+            </Link>
+          </motion.div>
+        </div>
+
+        {/* ─── Desktop Layout ─── */}
+        <div className="hidden sm:grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
           <motion.div style={{ y: imageY }} className="relative">
             <motion.div
               initial={{ opacity: 0, scale: 0.92, filter: "blur(8px)" }}
@@ -41,12 +98,11 @@ export default function AboutPreview() {
                 </div>
               </div>
 
-              {/* Floating badge */}
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.4, duration: 0.6 }}
-                className="absolute -bottom-6 -left-3 sm:-bottom-7 sm:left-6"
+                className="absolute -bottom-6 left-6"
                 style={{ animation: "float 8s ease-in-out infinite" }}
               >
                 <div className="glass-card shadow-glass p-4">
@@ -62,7 +118,6 @@ export default function AboutPreview() {
             </motion.div>
           </motion.div>
 
-          {/* Text side */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -80,7 +135,6 @@ export default function AboutPreview() {
               بی‌نظیر از طعم و کیفیت برای شما به ارمغان بیاورد.
             </p>
 
-            {/* Features — numbered */}
             <div className="mt-10 space-y-5">
               {[
                 { num: "01", icon: "🍡", title: "دست‌ساز", desc: "تمام محصولات با دست تهیه می‌شوند" },

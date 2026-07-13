@@ -76,40 +76,39 @@ export default function Modal({ isOpen, onClose, title, children, size = "md" }:
             aria-hidden="true"
           />
           <motion.div
-            initial={{ opacity: 0, scale: 0.96, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.96, y: 20 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className={`glass-card relative w-full ${sizeClasses[size]} max-h-[90vh] overflow-hidden shadow-glass-lg sm:rounded-2xl`}
-            style={{ borderRadius: "1.25rem" }}
+            initial={{ opacity: 0, y: 40, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 40, scale: 0.96 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className={`glass-card relative w-full ${sizeClasses[size]} max-h-[85vh] sm:max-h-[90vh] overflow-hidden shadow-glass-lg sm:rounded-2xl`}
+            style={{ borderRadius: "1.25rem 1.25rem 0 0" }}
             role="dialog"
             aria-modal="true"
             aria-label={title}
           >
+            {/* Mobile swipe indicator */}
+            <div className="flex justify-center pt-2.5 sm:hidden">
+              <div className="swipe-indicator" />
+            </div>
+
             <div
-              className="sticky top-0 z-10 flex items-center justify-between px-6 py-4"
+              className="sticky top-0 z-10 flex items-center justify-between px-5 py-3.5 sm:px-6 sm:py-4"
               style={{ borderBottom: "0.5px solid var(--border-subtle)" }}
             >
-              <h3 className="text-base font-semibold" style={{ color: "var(--foreground)" }}>
+              <h3 className="text-[0.9375rem] sm:text-base font-semibold" style={{ color: "var(--foreground)" }}>
                 {title}
               </h3>
               <button
                 ref={closeButtonRef}
                 onClick={onClose}
-                className="rounded-full p-2 transition-colors"
+                className="flex h-9 w-9 items-center justify-center rounded-full transition-colors"
                 style={{ color: "var(--muted)" }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "rgba(0,0,0,0.04)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "transparent";
-                }}
                 aria-label="بستن"
               >
                 <HiXMark size={18} />
               </button>
             </div>
-            <div className="max-h-[calc(90vh-64px)] overflow-y-auto px-6 py-5">
+            <div className="max-h-[calc(85vh-64px)] sm:max-h-[calc(90vh-64px)] overflow-y-auto px-5 py-4 sm:px-6 sm:py-5">
               {children}
             </div>
           </motion.div>

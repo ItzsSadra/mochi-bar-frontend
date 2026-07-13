@@ -12,7 +12,7 @@ export default function ContactPreview() {
   const [instagram, setInstagram] = useState("@mochibar_isfahan");
   const [workingHours, setWorkingHours] = useState("هر روز ۴ بعد از ظهر تا ۱۱ شب");
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: true, margin: "-40px" });
 
   useEffect(() => {
     api.getSettings().then((data) => {
@@ -32,10 +32,74 @@ export default function ContactPreview() {
   ];
 
   return (
-    <section ref={ref} className="relative py-24 sm:py-32" style={{ background: "var(--background)" }}>
+    <section ref={ref} className="relative py-16 sm:py-24 lg:py-32" style={{ background: "var(--background)" }}>
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
-          {/* Text */}
+        {/* ─── Mobile Layout: Stacked vertical ─── */}
+        <div className="sm:hidden">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="text-center"
+          >
+            <span className="section-label">تماس با ما</span>
+            <h2 className="section-title mt-2.5">منتظر شما هستیم</h2>
+          </motion.div>
+
+          {/* Map */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.1, duration: 0.6 }}
+            className="mt-6 overflow-hidden"
+            style={{
+              borderRadius: "1.25rem",
+              border: "0.5px solid var(--border-subtle)",
+              height: "12rem",
+            }}
+          >
+            <iframe
+              src="https://www.openstreetmap.org/export/embed.html?bbox=51.6373%2C32.7020%2C51.6473%2C32.7120&layer=mapnik&marker=32.70703450108918%2C51.64230863500501"
+              className="h-full w-full border-0"
+              title="موقعیت موچی بار روی نقشه"
+              loading="lazy"
+            />
+          </motion.div>
+
+          {/* Contact info — 2x2 grid */}
+          <div className="mt-4 grid grid-cols-2 gap-2.5">
+            {items.map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 10 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.15 + i * 0.05, duration: 0.4 }}
+                className="glass-card p-3.5"
+                style={{ borderRadius: "1rem" }}
+              >
+                <div className="flex h-8 w-8 items-center justify-center rounded-xl text-[0.6875rem]" style={{ background: "var(--matcha-light)", color: "var(--matcha)" }}>
+                  <item.icon size={13} />
+                </div>
+                <p className="mt-2.5 text-[0.75rem] font-medium leading-snug" style={{ color: "var(--foreground)" }}>{item.text}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.4, duration: 0.5 }}
+            className="mt-5"
+          >
+            <Link href="/contact" className="btn-primary w-full block text-center">
+              تماس با ما
+            </Link>
+          </motion.div>
+        </div>
+
+        {/* ─── Desktop Layout ─── */}
+        <div className="hidden sm:grid grid-cols-1 gap-12 lg:grid-cols-2">
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -69,7 +133,6 @@ export default function ContactPreview() {
             </Link>
           </motion.div>
 
-          {/* Map */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}

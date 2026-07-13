@@ -12,9 +12,9 @@ interface MenuCardProps {
 export default function MenuCard({ item }: MenuCardProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 12 }}
+      initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
+      transition={{ duration: 0.35 }}
     >
       <div className="glass-card group h-full overflow-hidden">
         <div className="relative aspect-[4/3] overflow-hidden" style={{ background: "rgba(0,0,0,0.02)" }}>
@@ -25,14 +25,12 @@ export default function MenuCard({ item }: MenuCardProps) {
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
           ) : (
-            <div className="flex h-full items-center justify-center text-5xl">
-              🍡
-            </div>
+            <div className="flex h-full items-center justify-center text-4xl sm:text-5xl">🍡</div>
           )}
-          <div className="absolute left-3 top-3 flex gap-1.5">
+          <div className="absolute left-2 top-2 sm:left-3 sm:top-3 flex gap-1 sm:gap-1.5">
             {item.is_new && (
               <span
-                className="rounded-full px-2.5 py-1 text-2xs font-semibold text-white"
+                className="rounded-full px-2 py-0.5 sm:px-2.5 sm:py-1 text-[0.625rem] sm:text-2xs font-semibold text-white"
                 style={{ background: "linear-gradient(135deg, #6B8F71, #567a5c)" }}
               >
                 جدید
@@ -40,7 +38,7 @@ export default function MenuCard({ item }: MenuCardProps) {
             )}
             {item.is_featured && (
               <span
-                className="rounded-full px-2.5 py-1 text-2xs font-semibold text-white"
+                className="rounded-full px-2 py-0.5 sm:px-2.5 sm:py-1 text-[0.625rem] sm:text-2xs font-semibold text-white"
                 style={{ background: "linear-gradient(135deg, #ED849E, #E05C80)" }}
               >
                 ویژه
@@ -49,32 +47,32 @@ export default function MenuCard({ item }: MenuCardProps) {
           </div>
           {!item.is_available && (
             <div className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-              <span className="rounded-full bg-red-500 px-4 py-1.5 text-xs font-semibold text-white">
+              <span className="rounded-full bg-red-500 px-3 py-1 sm:px-4 sm:py-1.5 text-[0.6875rem] sm:text-xs font-semibold text-white">
                 ناموجود
               </span>
             </div>
           )}
         </div>
-        <div className="p-4">
+        <div className="p-3 sm:p-4">
           <div className="flex items-start justify-between gap-2">
             <div className="min-w-0 flex-1">
-              <p className="text-2xs font-medium" style={{ color: "#6B8F71" }}>
+              <p className="text-[0.625rem] sm:text-2xs font-medium" style={{ color: "#6B8F71" }}>
                 {item.category_name}
               </p>
-              <h3 className="mt-0.5 truncate text-sm font-semibold" style={{ color: "var(--foreground)" }}>
+              <h3 className="mt-0.5 truncate text-[0.8125rem] sm:text-sm font-semibold" style={{ color: "var(--foreground)" }}>
                 {item.name}
               </h3>
             </div>
-            <span className="shrink-0 text-sm font-bold" style={{ color: "#6B8F71" }}>
+            <span className="shrink-0 text-[0.8125rem] sm:text-sm font-bold" style={{ color: "#6B8F71" }}>
               {formatPrice(item.price)}
             </span>
           </div>
           {item.description && (
-            <p className="mt-2 line-clamp-2 text-xs leading-relaxed" style={{ color: "var(--muted)" }}>
+            <p className="mt-1.5 line-clamp-2 text-[0.6875rem] sm:text-xs leading-relaxed" style={{ color: "var(--muted)" }}>
               {item.description}
             </p>
           )}
-          <div className="mt-2.5 flex items-center gap-3 text-2xs" style={{ color: "var(--muted)" }}>
+          <div className="mt-2 flex items-center gap-2 sm:gap-3 text-[0.625rem] sm:text-2xs" style={{ color: "var(--muted)" }}>
             {item.preparation_time && (
               <span>{item.preparation_time} دقیقه</span>
             )}

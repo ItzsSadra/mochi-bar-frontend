@@ -40,24 +40,186 @@ export default function Hero() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative min-h-[100vh] overflow-hidden" style={{ background: "var(--background)" }}>
-      {/* Parallax ambient orbs */}
+    <section ref={sectionRef} className="relative min-h-[100dvh] overflow-hidden" style={{ background: "var(--background)" }}>
+      {/* Background orbs — simplified on mobile */}
       <div className="absolute inset-0 overflow-hidden">
-        <motion.div style={{ y: orbY1 }} className="absolute -right-32 -top-32">
-          <div className="h-[500px] w-[500px] rounded-full animate-pulse-soft" style={{ background: "radial-gradient(circle, rgba(107,143,113,0.15) 0%, transparent 70%)", filter: "blur(80px)" }} />
+        <motion.div style={{ y: orbY1 }} className="absolute -right-20 -top-20 sm:-right-32 sm:-top-32">
+          <div className="h-[250px] w-[250px] sm:h-[500px] sm:w-[500px] rounded-full animate-pulse-soft" style={{ background: "radial-gradient(circle, rgba(107,143,113,0.12) 0%, transparent 70%)", filter: "blur(60px)" }} />
         </motion.div>
-        <motion.div style={{ y: orbY2 }} className="absolute -bottom-20 -left-20">
-          <div className="h-[400px] w-[400px] rounded-full animate-pulse-soft" style={{ background: "radial-gradient(circle, rgba(237,132,158,0.1) 0%, transparent 70%)", filter: "blur(80px)", animationDelay: "2s" }} />
+        <motion.div style={{ y: orbY2 }} className="absolute -bottom-16 -left-16 sm:-bottom-20 sm:-left-20">
+          <div className="h-[200px] w-[200px] sm:h-[400px] sm:w-[400px] rounded-full animate-pulse-soft" style={{ background: "radial-gradient(circle, rgba(237,132,158,0.08) 0%, transparent 70%)", filter: "blur(50px)", animationDelay: "2s" }} />
         </motion.div>
         <motion.div style={{ y: orbY3 }} className="absolute left-1/2 top-1/3 -translate-x-1/2">
-          <div className="h-[350px] w-[350px] rounded-full animate-float-slow" style={{ background: "radial-gradient(circle, rgba(107,143,113,0.08) 0%, transparent 70%)", filter: "blur(60px)" }} />
+          <div className="hidden sm:block h-[350px] w-[350px] rounded-full animate-float-slow" style={{ background: "radial-gradient(circle, rgba(107,143,113,0.08) 0%, transparent 70%)", filter: "blur(60px)" }} />
         </motion.div>
-        {/* Subtle grid pattern */}
-        <div className="absolute inset-0" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, rgba(0,0,0,0.02) 1px, transparent 0)", backgroundSize: "48px 48px" }} />
+        {/* Subtle grid pattern — lighter on mobile */}
+        <div className="absolute inset-0" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, rgba(0,0,0,0.015) 1px, transparent 0)", backgroundSize: "48px 48px" }} />
       </div>
 
-      <motion.div style={{ opacity }} className="relative mx-auto flex min-h-[100vh] max-w-7xl items-center px-5 sm:px-6 lg:px-8">
-        <div className="grid w-full grid-cols-1 items-center gap-16 lg:grid-cols-2">
+      <motion.div style={{ opacity }} className="relative mx-auto flex min-h-[100dvh] max-w-7xl items-center px-5 sm:px-6 lg:px-8">
+        {/* ─── Mobile Hero Layout ─── */}
+        <div className="sm:hidden w-full pt-16 pb-8">
+          <div className="flex flex-col items-center text-center">
+            {/* Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 16, filter: "blur(6px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="mb-6 inline-flex items-center gap-2 rounded-full px-4 py-2"
+              style={{
+                background: "var(--matcha-light)",
+                border: "0.5px solid var(--border-accent)",
+                color: "var(--matcha)",
+              }}
+            >
+              <span className="text-sm">🍡</span>
+              <span className="text-[0.6875rem] font-semibold tracking-wide">تجربه‌ای متفاوت</span>
+            </motion.div>
+
+            {/* Hero image */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
+              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+              transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="relative mb-8 w-full max-w-[280px] aspect-square"
+            >
+              <div
+                className="absolute inset-0 overflow-hidden"
+                style={{
+                  borderRadius: "2rem",
+                  background: "linear-gradient(135deg, rgba(107,143,113,0.1) 0%, rgba(237,132,158,0.06) 50%, rgba(107,143,113,0.08) 100%)",
+                  border: "0.5px solid var(--border-subtle)",
+                  boxShadow: "0 24px 60px -16px rgba(107,143,113,0.12), 0 8px 24px -8px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.5)",
+                }}
+              >
+                <div className="absolute inset-0" style={{ backdropFilter: "blur(40px)", WebkitBackdropFilter: "blur(40px)" }} />
+              </div>
+              <img
+                src="/images/hero.png"
+                alt="موچی دست ساز"
+                className="absolute inset-4 rounded-[1.5rem] object-cover"
+                style={{ width: "calc(100% - 32px)", height: "calc(100% - 32px)" }}
+                onError={(e) => { e.currentTarget.style.display = "none"; }}
+              />
+
+              {/* Floating card — first item */}
+              {featuredItems[0] && (
+                <motion.div
+                  initial={{ opacity: 0, x: 20, rotate: 2 }}
+                  animate={{ opacity: 1, x: 0, rotate: 1.5 }}
+                  transition={{ delay: 0.8, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute -right-2 top-4"
+                  style={{ animation: "float 8s ease-in-out infinite" }}
+                >
+                  <div className="glass-card shadow-glass p-3">
+                    <div className="flex items-center gap-2.5">
+                      {featuredItems[0].image_url ? (
+                        <img src={getImageUrl(featuredItems[0].image_url)} alt={featuredItems[0].name} className="h-9 w-9 rounded-xl object-cover" />
+                      ) : (
+                        <div className="flex h-9 w-9 items-center justify-center rounded-xl text-base" style={{ background: "var(--matcha-light)" }}>🍡</div>
+                      )}
+                      <div>
+                        <p className="text-[0.625rem] font-semibold" style={{ color: "var(--foreground)" }}>{featuredItems[0].name}</p>
+                        <p className="text-[0.625rem] font-medium" style={{ color: "var(--matcha)" }}>{formatPrice(featuredItems[0].price)}</p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {featuredItems[1] && (
+                <motion.div
+                  initial={{ opacity: 0, x: -20, rotate: -2 }}
+                  animate={{ opacity: 1, x: 0, rotate: -1 }}
+                  transition={{ delay: 1, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute -left-2 bottom-6"
+                  style={{ animation: "float 10s ease-in-out infinite", animationDelay: "3s" }}
+                >
+                  <div className="glass-card shadow-glass p-3">
+                    <div className="flex items-center gap-2.5">
+                      {featuredItems[1].image_url ? (
+                        <img src={getImageUrl(featuredItems[1].image_url)} alt={featuredItems[1].name} className="h-9 w-9 rounded-xl object-cover" />
+                      ) : (
+                        <div className="flex h-9 w-9 items-center justify-center rounded-xl text-base" style={{ background: "var(--sakura)" }}>🍡</div>
+                      )}
+                      <div>
+                        <p className="text-[0.625rem] font-semibold" style={{ color: "var(--foreground)" }}>{featuredItems[1].name}</p>
+                        <p className="text-[0.625rem] font-medium" style={{ color: "var(--matcha)" }}>{formatPrice(featuredItems[1].price)}</p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </motion.div>
+
+            {/* Title — centered, full-width */}
+            <motion.h1
+              initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 0.8, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              className="text-[2rem] font-bold leading-[1.1] tracking-tight"
+              style={{ color: "var(--foreground)", letterSpacing: "-0.03em" }}
+            >
+              {heroText}
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 16, filter: "blur(4px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 0.7, delay: 0.55 }}
+              className="mt-3.5 max-w-xs text-[0.8125rem] leading-relaxed"
+              style={{ color: "var(--muted)" }}
+            >
+              {heroSubtext}
+            </motion.p>
+
+            {/* CTA buttons — full width stacked */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.65 }}
+              className="mt-8 flex w-full max-w-xs flex-col gap-2.5"
+            >
+              <Link href="/menu" className="btn-primary w-full">
+                مشاهده منو
+              </Link>
+              <Link href="/contact" className="btn-secondary w-full">
+                تماس با ما
+              </Link>
+            </motion.div>
+
+            {/* Stats — horizontal row */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+              className="mt-10 flex items-center justify-center gap-6"
+            >
+              {[
+                { value: stats.items > 0 ? `${stats.items}+` : "—", label: "محصول" },
+                { value: stats.categories > 0 ? `${stats.categories}+` : "—", label: "دسته‌بندی" },
+                { value: "۱۰۰۰+", label: "مشتری" },
+              ].map((stat, i) => (
+                <div key={i} className="flex items-center gap-6">
+                  <div className="text-center">
+                    <p className="text-xl font-bold" style={{ color: "var(--matcha)", letterSpacing: "-0.02em" }}>
+                      {stat.value}
+                    </p>
+                    <p className="mt-0.5 text-[0.625rem] font-medium" style={{ color: "var(--muted)" }}>
+                      {stat.label}
+                    </p>
+                  </div>
+                  {i < 2 && (
+                    <div className="h-8 w-px" style={{ background: "var(--border)" }} />
+                  )}
+                </div>
+              ))}
+            </motion.div>
+          </div>
+        </div>
+
+        {/* ─── Desktop Hero Layout ─── */}
+        <div className="hidden sm:grid w-full grid-cols-1 items-center gap-16 lg:grid-cols-2">
           {/* Text content */}
           <motion.div style={{ y: textY }} className="relative z-10">
             <motion.div
@@ -145,7 +307,6 @@ export default function Hero() {
               transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
               className="relative mx-auto aspect-square max-w-[480px]"
             >
-              {/* Glass container */}
               <div
                 className="absolute inset-0 overflow-hidden"
                 style={{
@@ -165,16 +326,15 @@ export default function Hero() {
                 onError={(e) => { e.currentTarget.style.display = "none"; }}
               />
 
-              {/* Floating glass cards */}
               {featuredItems[0] && (
                 <motion.div
                   initial={{ opacity: 0, x: 30, rotate: 3 }}
                   animate={{ opacity: 1, x: 0, rotate: 2 }}
                   transition={{ delay: 0.8, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute -right-3 top-8 sm:-right-6"
+                  className="absolute -right-6 top-8"
                   style={{ animation: "float 8s ease-in-out infinite" }}
                 >
-                  <div className="glass-card shadow-glass p-3.5 sm:p-4">
+                  <div className="glass-card shadow-glass p-4">
                     <div className="flex items-center gap-3">
                       {featuredItems[0].image_url ? (
                         <img src={getImageUrl(featuredItems[0].image_url)} alt={featuredItems[0].name} className="h-11 w-11 rounded-2xl object-cover" />
@@ -195,10 +355,10 @@ export default function Hero() {
                   initial={{ opacity: 0, x: -30, rotate: -3 }}
                   animate={{ opacity: 1, x: 0, rotate: -1.5 }}
                   transition={{ delay: 1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute -left-3 bottom-12 sm:-left-6"
+                  className="absolute -left-6 bottom-12"
                   style={{ animation: "float 10s ease-in-out infinite", animationDelay: "3s" }}
                 >
-                  <div className="glass-card shadow-glass p-3.5 sm:p-4">
+                  <div className="glass-card shadow-glass p-4">
                     <div className="flex items-center gap-3">
                       {featuredItems[1].image_url ? (
                         <img src={getImageUrl(featuredItems[1].image_url)} alt={featuredItems[1].name} className="h-11 w-11 rounded-2xl object-cover" />
@@ -214,7 +374,6 @@ export default function Hero() {
                 </motion.div>
               )}
 
-              {/* Decorative floating orb */}
               <motion.div
                 animate={{ y: [-8, 8, -8] }}
                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
@@ -233,7 +392,7 @@ export default function Hero() {
       </motion.div>
 
       {/* Bottom fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32" style={{ background: "linear-gradient(to top, var(--background), transparent)" }} />
+      <div className="absolute bottom-0 left-0 right-0 h-24 sm:h-32" style={{ background: "linear-gradient(to top, var(--background), transparent)" }} />
     </section>
   );
 }

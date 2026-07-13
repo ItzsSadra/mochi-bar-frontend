@@ -18,7 +18,7 @@ export default function MenuFilters({
   onSearchChange,
 }: MenuFiltersProps) {
   return (
-    <div className="space-y-4">
+    <div className="space-y-3 sm:space-y-4">
       <div className="relative max-w-sm">
           <input
             type="text"
@@ -40,10 +40,11 @@ export default function MenuFilters({
         </svg>
       </div>
 
-      <div className="flex flex-wrap gap-2">
+      {/* Mobile: horizontal scroll pills */}
+      <div className="flex gap-2 overflow-x-auto pb-1 -mx-5 px-5 sm:mx-0 sm:px-0 scrollbar-none sm:flex-wrap sm:overflow-visible">
         <button
           onClick={() => onCategoryChange("")}
-          className="rounded-full px-4 py-2 text-xs font-medium transition-all duration-300"
+          className="flex-shrink-0 rounded-full px-4 py-2 text-[0.75rem] sm:text-xs font-medium transition-all duration-300"
           style={{
             background: selectedCategory === "" ? "#6B8F71" : "rgba(0,0,0,0.04)",
             color: selectedCategory === "" ? "#fff" : "var(--muted)",
@@ -56,7 +57,7 @@ export default function MenuFilters({
           <button
             key={cat.id}
             onClick={() => onCategoryChange(cat.slug)}
-            className="rounded-full px-4 py-2 text-xs font-medium transition-all duration-300"
+            className="flex-shrink-0 rounded-full px-4 py-2 text-[0.75rem] sm:text-xs font-medium transition-all duration-300"
             style={{
               background: selectedCategory === cat.slug ? "#6B8F71" : "rgba(0,0,0,0.04)",
               color: selectedCategory === cat.slug ? "#fff" : "var(--muted)",
