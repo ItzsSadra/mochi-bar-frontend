@@ -124,7 +124,7 @@ export default function AdminMenuPage() {
     setUploadProgress(0);
     try {
       const data = await api.uploadFileWithProgress(file, "menu", (p) => setUploadProgress(p));
-      setForm({ ...form, image_url: data.media.file_path });
+      setForm((prev) => ({ ...prev, image_url: data.media.file_path }));
     } catch {
       setError("آپلود تصویر با خطا مواجه شد");
     } finally {
@@ -395,7 +395,7 @@ export default function AdminMenuPage() {
             >
               انصراف
             </button>
-            <button type="submit" className="btn-primary">
+            <button type="submit" className="btn-primary" disabled={uploading}>
               {editingItem ? "ذخیره تغییرات" : "افزودن"}
             </button>
           </div>
