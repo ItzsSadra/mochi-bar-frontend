@@ -37,7 +37,7 @@ export default function Header() {
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-matcha-400 text-lg text-white transition-transform duration-200 group-hover:scale-105">
               🍡
             </div>
-            <div className="hidden sm:block">
+            <div>
               <h1 className="text-base font-bold text-gray-900 dark:text-white leading-none">
                 موچی بار
               </h1>

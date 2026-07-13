@@ -47,7 +47,7 @@ export default function Hero() {
       </div>
 
       <div className="relative mx-auto flex min-h-[90vh] max-w-6xl items-center px-5 sm:min-h-screen sm:px-6 lg:px-8">
-        <div className="grid w-full grid-cols-1 items-center gap-10 sm:gap-16 lg:grid-cols-2">
+        <div className="grid w-full grid-cols-1 items-center gap-10 sm:gap-16 md:grid-cols-2">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
@@ -107,7 +107,7 @@ export default function Hero() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="relative hidden lg:block"
+            className="relative"
           >
             <div className="relative mx-auto aspect-square max-w-[420px]">
               <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-br from-matcha-100/80 to-sakura-100/40 dark:from-matcha-900/30 dark:to-sakura-900/20" />

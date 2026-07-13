@@ -7,7 +7,7 @@ export default function AboutPreview() {
   return (
     <section className="py-12 bg-cream-50 dark:bg-[#0c0c18] sm:py-20">
       <div className="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 items-center gap-10 sm:gap-14 lg:grid-cols-2">
+        <div className="grid grid-cols-1 items-center gap-10 sm:gap-14 md:grid-cols-2">
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -17,7 +17,7 @@ export default function AboutPreview() {
             <div className="overflow-hidden rounded-2xl bg-gradient-to-br from-matcha-100 to-sakura-50 p-6 dark:from-matcha-900/20 dark:to-sakura-900/10 sm:p-10">
               <div className="flex items-center justify-center text-6xl sm:text-7xl">🍵</div>
             </div>
-            <div className="relative -mt-4 ml-4 rounded-xl border border-gray-100 bg-white p-3.5 shadow-soft dark:border-white/10 dark:bg-white/10 sm:absolute sm:-bottom-5 sm:left-3 sm:mt-0 sm:-left-5 sm:left-auto">
+            <div className="absolute -bottom-5 left-3 rounded-xl border border-gray-100 bg-white p-3.5 shadow-soft dark:border-white/10 dark:bg-white/10">
               <div className="flex items-center gap-2.5">
                 <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-matcha-50 text-lg dark:bg-matcha-900/30">
                   ☕

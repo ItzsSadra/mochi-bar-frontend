@@ -5,16 +5,10 @@ import { motion } from "framer-motion";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { api } from "@/lib/api";
-import { useToast } from "@/context/ToastContext";
-import { FaInstagram, FaPhone, FaMapMarkerAlt, FaClock, FaPaperPlane } from "react-icons/fa";
+import { FaInstagram, FaPhone, FaMapMarkerAlt, FaClock } from "react-icons/fa";
 
 export default function ContactPageClient() {
-  const { toast } = useToast();
   const [settings, setSettings] = useState<Record<string, string>>({});
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [message, setMessage] = useState("");
-  const [sending, setSending] = useState(false);
 
   useEffect(() => {
     api.getSettings().then((data) => {
@@ -28,26 +22,6 @@ export default function ContactPageClient() {
     { icon: FaInstagram, label: "اینستاگرام", value: settings.instagram || "@mochibar_isfahan", href: `https://instagram.com/${(settings.instagram || "@mochibar_isfahan").replace("@", "")}` },
     { icon: FaClock, label: "ساعات کاری", value: settings.working_hours || "هر روز ۴ بعد از ظهر تا ۱۱ شب" },
   ];
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name.trim() || !message.trim()) {
-      toast("لطفاً نام و پیام را وارد کنید", "error");
-      return;
-    }
-    setSending(true);
-    try {
-      await api.submitContact({ name: name.trim(), phone: phone.trim(), message: message.trim() });
-      toast("پیام شما با موفقیت ارسال شد", "success");
-      setName("");
-      setPhone("");
-      setMessage("");
-    } catch {
-      toast("ارسال پیام با خطا مواجه شد", "error");
-    } finally {
-      setSending(false);
-    }
-  };
 
   return (
     <>
@@ -65,7 +39,7 @@ export default function ContactPageClient() {
             </p>
           </motion.div>
 
-          <div className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-2">
+          <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2">
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -107,81 +81,21 @@ export default function ContactPageClient() {
                   )}
                 </motion.div>
               ))}
-
-              <div className="overflow-hidden rounded-2xl bg-gray-100 dark:bg-white/[0.03]">
-                <div className="h-full min-h-[200px] w-full overflow-hidden rounded-2xl sm:min-h-[260px]">
-                  <iframe
-                    src="https://www.openstreetmap.org/export/embed.html?bbox=51.6373%2C32.7020%2C51.6473%2C32.7120&layer=mapnik&marker=32.70703450108918%2C51.64230863500501"
-                    className="h-full w-full border-0"
-                    title="موقعیت موچی بار روی نقشه"
-                    loading="lazy"
-                  />
-                </div>
-              </div>
             </motion.div>
 
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
+              className="overflow-hidden rounded-2xl bg-gray-100 dark:bg-white/[0.03]"
             >
-              <div className="rounded-2xl border border-gray-100 bg-white p-6 dark:border-white/5 dark:bg-white/[0.02] sm:p-8">
-                <h2 className="text-base font-bold text-gray-900 dark:text-white">
-                  پیام دهید
-                </h2>
-                <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">
-                  فرم زیر را پر کنید تا در اسرع وقت پاسخ دهیم
-                </p>
-
-                <form onSubmit={handleSubmit} className="mt-5 space-y-4">
-                  <div>
-                    <label className="mb-1 block text-xs font-medium text-gray-600 dark:text-gray-300">
-                      نام *
-                    </label>
-                    <input
-                      type="text"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      className="input-field"
-                      placeholder="نام خود را وارد کنید"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="mb-1 block text-xs font-medium text-gray-600 dark:text-gray-300">
-                      تلفن
-                    </label>
-                    <input
-                      type="tel"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      className="input-field"
-                      placeholder="شماره تماس (اختیاری)"
-                      dir="ltr"
-                    />
-                  </div>
-                  <div>
-                    <label className="mb-1 block text-xs font-medium text-gray-600 dark:text-gray-300">
-                      پیام *
-                    </label>
-                    <textarea
-                      value={message}
-                      onChange={(e) => setMessage(e.target.value)}
-                      className="input-field"
-                      rows={4}
-                      placeholder="پیام خود را بنویسید..."
-                      required
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    disabled={sending}
-                    className="btn-primary w-full"
-                  >
-                    <FaPaperPlane size={13} />
-                    {sending ? "در حال ارسال..." : "ارسال پیام"}
-                  </button>
-                </form>
+              <div className="h-full min-h-[200px] w-full overflow-hidden rounded-2xl sm:min-h-[260px]">
+                <iframe
+                  src="https://www.openstreetmap.org/export/embed.html?bbox=51.6373%2C32.7020%2C51.6473%2C32.7120&layer=mapnik&marker=32.70703450108918%2C51.64230863500501"
+                  className="h-full w-full border-0"
+                  title="موقعیت موچی بار روی نقشه"
+                  loading="lazy"
+                />
               </div>
             </motion.div>
           </div>
