@@ -27,6 +27,8 @@ export default function AdminMenuPage() {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   const loadData = async () => {
     try {
@@ -118,11 +120,16 @@ export default function AdminMenuPage() {
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    setUploading(true);
+    setUploadProgress(0);
     try {
-      const data = await api.uploadFile(file, "menu");
+      const data = await api.uploadFileWithProgress(file, "menu", (p) => setUploadProgress(p));
       setForm({ ...form, image_url: data.media.file_path });
     } catch {
       setError("آپلود تصویر با خطا مواجه شد");
+    } finally {
+      setUploading(false);
+      setUploadProgress(0);
     }
   };
 
@@ -325,8 +332,23 @@ export default function AdminMenuPage() {
               accept="image/*"
               onChange={handleImageUpload}
               className="input-field"
+              disabled={uploading}
             />
-            {form.image_url && (
+            {uploading && (
+              <div className="mt-2">
+                <div className="mb-1 flex items-center justify-between text-xs">
+                  <span className="text-matcha-600 dark:text-matcha-400">در حال آپلود...</span>
+                  <span className="font-medium text-matcha-600 dark:text-matcha-400">{uploadProgress}%</span>
+                </div>
+                <div className="h-1.5 w-full overflow-hidden rounded-full bg-matcha-200/50 dark:bg-matcha-800/30">
+                  <div
+                    className="h-full rounded-full bg-matcha-400 transition-all duration-300 ease-out dark:bg-matcha-500"
+                    style={{ width: `${uploadProgress}%` }}
+                  />
+                </div>
+              </div>
+            )}
+            {form.image_url && !uploading && (
               <img
                 src={getImageUrl(form.image_url)}
                 alt=""

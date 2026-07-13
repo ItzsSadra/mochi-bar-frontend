@@ -3,17 +3,23 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { api } from "@/lib/api";
+import { api, getImageUrl } from "@/lib/api";
+import { MenuItem } from "@/types";
+import { formatPrice } from "@/lib/utils";
 
 export default function Hero() {
   const [heroText, setHeroText] = useState("لذت طعم اصیل ژاپنی");
   const [heroSubtext, setHeroSubtext] = useState("موچی های دست ساز با کیفیت فوق‌العاده");
+  const [featuredItems, setFeaturedItems] = useState<MenuItem[]>([]);
 
   useEffect(() => {
     api.getSettings().then((data) => {
       const hero = data.settings.hero || {};
       if (hero.hero_text) setHeroText(hero.hero_text);
       if (hero.hero_subtext) setHeroSubtext(hero.hero_subtext);
+    }).catch(() => {});
+    api.getMenu({ featured: true }).then((data) => {
+      setFeaturedItems(data.items.slice(0, 2));
     }).catch(() => {});
   }, []);
 
@@ -99,29 +105,49 @@ export default function Hero() {
                 }}
               />
 
-              <div className="absolute -right-3 top-10 rounded-xl border border-white/60 bg-white/90 p-3 shadow-soft backdrop-blur-sm dark:border-white/10 dark:bg-white/10">
-                <div className="flex items-center gap-2.5">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-matcha-50 text-sm dark:bg-matcha-900/50">
-                    🍵
-                  </div>
-                  <div>
-                    <p className="text-xs font-semibold text-gray-900 dark:text-white">ماچا لاته</p>
-                    <p className="text-2xs text-gray-400">۷۵,۰۰۰ تومان</p>
+              {featuredItems.length > 0 && featuredItems[0] && (
+                <div className="absolute -right-3 top-10 rounded-xl border border-white/60 bg-white/90 p-3 shadow-soft backdrop-blur-sm dark:border-white/10 dark:bg-white/10">
+                  <div className="flex items-center gap-2.5">
+                    {featuredItems[0].image_url ? (
+                      <img
+                        src={getImageUrl(featuredItems[0].image_url)}
+                        alt={featuredItems[0].name}
+                        className="h-8 w-8 rounded-lg object-cover"
+                      />
+                    ) : (
+                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-matcha-50 text-sm dark:bg-matcha-900/50">
+                        🍡
+                      </div>
+                    )}
+                    <div>
+                      <p className="text-xs font-semibold text-gray-900 dark:text-white">{featuredItems[0].name}</p>
+                      <p className="text-2xs text-gray-400">{formatPrice(featuredItems[0].price)}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
 
-              <div className="absolute -left-3 bottom-10 rounded-xl border border-white/60 bg-white/90 p-3 shadow-soft backdrop-blur-sm dark:border-white/10 dark:bg-white/10">
-                <div className="flex items-center gap-2.5">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-sakura-50 text-sm dark:bg-sakura-900/30">
-                    🍰
-                  </div>
-                  <div>
-                    <p className="text-xs font-semibold text-gray-900 dark:text-white">کیک رولت</p>
-                    <p className="text-2xs text-gray-400">۹۰,۰۰۰ تومان</p>
+              {featuredItems.length > 1 && featuredItems[1] && (
+                <div className="absolute -left-3 bottom-10 rounded-xl border border-white/60 bg-white/90 p-3 shadow-soft backdrop-blur-sm dark:border-white/10 dark:bg-white/10">
+                  <div className="flex items-center gap-2.5">
+                    {featuredItems[1].image_url ? (
+                      <img
+                        src={getImageUrl(featuredItems[1].image_url)}
+                        alt={featuredItems[1].name}
+                        className="h-8 w-8 rounded-lg object-cover"
+                      />
+                    ) : (
+                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-sakura-50 text-sm dark:bg-sakura-900/30">
+                        🍡
+                      </div>
+                    )}
+                    <div>
+                      <p className="text-xs font-semibold text-gray-900 dark:text-white">{featuredItems[1].name}</p>
+                      <p className="text-2xs text-gray-400">{formatPrice(featuredItems[1].price)}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </motion.div>
         </div>
