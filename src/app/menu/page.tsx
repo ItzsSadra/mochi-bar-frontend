@@ -7,7 +7,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import MenuCard from "@/components/menu/MenuCard";
 import MenuFilters from "@/components/menu/MenuFilters";
-import Loading from "@/components/ui/Loading";
+import { MenuCardSkeleton } from "@/components/ui/Skeleton";
 import { api } from "@/lib/api";
 import { MenuItem, Category } from "@/types";
 
@@ -23,7 +23,7 @@ function MenuContent() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.getCategories().then((data) => setCategories(data.categories.filter((c) => c.is_active)));
+    api.getCategories().then((data) => setCategories(data.categories.filter((c) => c.is_active))).catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -39,6 +39,7 @@ function MenuContent() {
         search: debouncedSearch || undefined,
       });
       setItems(data.items);
+    } catch {
     } finally {
       setLoading(false);
     }
@@ -76,7 +77,11 @@ function MenuContent() {
 
           <div className="mt-6">
             {loading ? (
-              <Loading />
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {Array.from({ length: 8 }).map((_, i) => (
+                  <MenuCardSkeleton key={i} />
+                ))}
+              </div>
             ) : items.length === 0 ? (
               <div className="py-20 text-center">
                 <p className="text-5xl">🍵</p>
@@ -101,7 +106,23 @@ function MenuContent() {
 
 export default function MenuPage() {
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-cream-50 pt-20 dark:bg-[#0c0c18]">
+          <div className="mx-auto max-w-6xl px-5 py-12 sm:px-6 lg:px-8">
+            <div className="text-center">
+              <div className="mx-auto h-8 w-32 animate-pulse rounded-xl bg-gray-200 dark:bg-white/5" />
+              <div className="mx-auto mt-3 h-4 w-64 animate-pulse rounded-lg bg-gray-200 dark:bg-white/5" />
+            </div>
+            <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <MenuCardSkeleton key={i} />
+              ))}
+            </div>
+          </div>
+        </div>
+      }
+    >
       <MenuContent />
     </Suspense>
   );

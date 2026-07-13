@@ -324,6 +324,13 @@ class ApiClient {
   async getMediaFolders() {
     return this.request<{ folders: string[] }>("/media/folders");
   }
+
+  async submitContact(data: { name: string; phone?: string; message: string }) {
+    return this.request<{ message: string }>("/contact", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+  }
 }
 
 export const api = new ApiClient();

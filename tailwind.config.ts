@@ -23,6 +23,14 @@ const config: Config = {
           900: "#28352b",
           950: "#131d16",
         },
+        sand: {
+          50: "#FEFDFB",
+          100: "#FDF9F0",
+          200: "#FAF3E1",
+          300: "#F5E9C8",
+          400: "#EDD9A5",
+          500: "#E5CA83",
+        },
         cream: {
           50: "#FEFDFB",
           100: "#FDF9F0",
@@ -30,6 +38,14 @@ const config: Config = {
           300: "#F5E9C8",
           400: "#EDD9A5",
           500: "#E5CA83",
+        },
+        ember: {
+          50: "#FEF6F7",
+          100: "#FDE8EC",
+          200: "#FAD1DA",
+          300: "#F5ADC0",
+          400: "#ED849E",
+          500: "#E05C80",
         },
         sakura: {
           50: "#FEF6F7",

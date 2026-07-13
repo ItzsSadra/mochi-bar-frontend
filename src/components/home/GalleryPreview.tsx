@@ -5,12 +5,14 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { api, getImageUrl } from "@/lib/api";
 import { GalleryImage } from "@/types";
+import Skeleton from "@/components/ui/Skeleton";
 
 export default function GalleryPreview() {
   const [images, setImages] = useState<GalleryImage[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.getGallery().then((data) => setImages(data.images.slice(0, 6))).catch(() => {});
+    api.getGallery().then((data) => setImages(data.images.slice(0, 6))).catch(() => {}).finally(() => setLoading(false));
   }, []);
 
   return (
@@ -30,7 +32,11 @@ export default function GalleryPreview() {
         </motion.div>
 
         <div className="mt-8 grid grid-cols-2 gap-3 sm:mt-14 md:grid-cols-3 lg:gap-4">
-          {images.map((image, index) => (
+          {loading
+            ? Array.from({ length: 6 }).map((_, i) => (
+                <Skeleton key={i} className="aspect-square" />
+              ))
+            : images.map((image, index) => (
             <motion.div
               key={image.id}
               initial={{ opacity: 0, y: 16 }}
@@ -45,16 +51,14 @@ export default function GalleryPreview() {
                 className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
             </motion.div>
-          ))}
-          {images.length === 0 &&
-            Array.from({ length: 6 }).map((_, i) => (
-              <div
-                key={i}
-                className="flex aspect-square items-center justify-center rounded-xl bg-gray-50 dark:bg-white/[0.02] text-3xl"
-              >
-                🍵
-              </div>
-            ))}
+          ))
+          }
+          {!loading && images.length === 0 && (
+            <div className="col-span-2 md:col-span-3 py-16 text-center">
+              <p className="text-5xl">🍵</p>
+              <p className="mt-3 text-sm text-gray-400">تصویری یافت نشد</p>
+            </div>
+          )}
         </div>
 
         <motion.div

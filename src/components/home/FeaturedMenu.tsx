@@ -7,12 +7,14 @@ import { api } from "@/lib/api";
 import { MenuItem } from "@/types";
 import { formatPrice } from "@/lib/utils";
 import { getImageUrl } from "@/lib/api";
+import { FeaturedSkeleton } from "@/components/ui/Skeleton";
 
 export default function FeaturedMenu() {
   const [items, setItems] = useState<MenuItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.getMenu({ featured: true }).then((data) => setItems(data.items.slice(0, 4))).catch(() => {});
+    api.getMenu({ featured: true }).then((data) => setItems(data.items.slice(0, 4))).catch(() => {}).finally(() => setLoading(false));
   }, []);
 
   return (
@@ -32,7 +34,10 @@ export default function FeaturedMenu() {
         </motion.div>
 
         <div className="mt-8 grid grid-cols-1 gap-5 sm:mt-14 sm:grid-cols-2 lg:grid-cols-4">
-          {items.map((item, index) => (
+          {loading ? (
+            <FeaturedSkeleton />
+          ) : (
+            items.map((item, index) => (
             <motion.div
               key={item.id}
               initial={{ opacity: 0, y: 20 }}
@@ -82,7 +87,8 @@ export default function FeaturedMenu() {
                 </div>
               </div>
             </motion.div>
-          ))}
+          ))
+          )}
         </div>
 
         <motion.div

@@ -1,27 +1,16 @@
-"use client";
+import type { Metadata } from "next";
+import HomePageClient from "@/components/home/HomePageClient";
 
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import Hero from "@/components/home/Hero";
-import FeaturedMenu from "@/components/home/FeaturedMenu";
-import AboutPreview from "@/components/home/AboutPreview";
-import GalleryPreview from "@/components/home/GalleryPreview";
-import Testimonials from "@/components/home/Testimonials";
-import ContactPreview from "@/components/home/ContactPreview";
+export const metadata: Metadata = {
+  title: "خانه | موچی بار",
+  description: "موچی بار، کافه تخصصی موچی و نوشیدنی‌های ژاپنی در اصفهان. موچی‌های دست‌ساز، لاته ماچا، و دسرهای اصیل ژاپنی.",
+  openGraph: {
+    title: "موچی بار | Mochi Café",
+    description: "کافه تخصصی موچی و نوشیدنی‌های ژاپنی در اصفهان",
+    type: "website",
+  },
+};
 
-export default function HomePage() {
-  return (
-    <>
-      <Header />
-      <main>
-        <Hero />
-        <FeaturedMenu />
-        <AboutPreview />
-        <GalleryPreview />
-        <Testimonials />
-        <ContactPreview />
-      </main>
-      <Footer />
-    </>
-  );
+export default function Page() {
+  return <HomePageClient />;
 }

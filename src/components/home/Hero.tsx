@@ -9,18 +9,34 @@ import { formatPrice } from "@/lib/utils";
 
 export default function Hero() {
   const [heroText, setHeroText] = useState("لذت طعم اصیل ژاپنی");
-  const [heroSubtext, setHeroSubtext] = useState("موچی های دست ساز با کیفیت فوق‌العاده");
+  const [heroSubtext, setHeroSubtext] = useState(
+    "موچی های دست ساز با کیفیت فوق‌العاده",
+  );
   const [featuredItems, setFeaturedItems] = useState<MenuItem[]>([]);
+  const [stats, setStats] = useState({ items: 0, categories: 0 });
 
   useEffect(() => {
-    api.getSettings().then((data) => {
-      const hero = data.settings.hero || {};
-      if (hero.hero_text) setHeroText(hero.hero_text);
-      if (hero.hero_subtext) setHeroSubtext(hero.hero_subtext);
-    }).catch(() => {});
-    api.getMenu({ featured: true }).then((data) => {
-      setFeaturedItems(data.items.slice(0, 2));
-    }).catch(() => {});
+    api
+      .getSettings()
+      .then((data) => {
+        const hero = data.settings.hero || {};
+        if (hero.hero_text) setHeroText(hero.hero_text);
+        if (hero.hero_subtext) setHeroSubtext(hero.hero_subtext);
+      })
+      .catch(() => {});
+    api
+      .getMenu({ featured: true })
+      .then((data) => {
+        setFeaturedItems(data.items.slice(0, 2));
+      })
+      .catch(() => {});
+    api
+      .getMenu()
+      .then((data) => {
+        const uniqueCategories = new Set(data.items.map((i) => i.category_slug));
+        setStats({ items: data.items.length, categories: uniqueCategories.size });
+      })
+      .catch(() => {});
   }, []);
 
   return (
@@ -66,8 +82,8 @@ export default function Hero() {
 
             <div className="mt-10 flex items-center gap-4 sm:mt-12 sm:gap-6">
               {[
-                { value: "۵۰+", label: "نوع نوشیدنی" },
-                { value: "۳۰+", label: "نوع دسر" },
+                { value: stats.items > 0 ? `${stats.items}+` : "—", label: "نوع محصول" },
+                { value: stats.categories > 0 ? `${stats.categories}+` : "—", label: "دسته‌بندی" },
                 { value: "۱۰۰۰+", label: "مشتری راضی" },
               ].map((stat, i) => (
                 <div key={i} className="flex items-center gap-4 sm:gap-6">
@@ -120,8 +136,12 @@ export default function Hero() {
                       </div>
                     )}
                     <div>
-                      <p className="text-xs font-semibold text-gray-900 dark:text-white">{featuredItems[0].name}</p>
-                      <p className="text-2xs text-gray-400">{formatPrice(featuredItems[0].price)}</p>
+                      <p className="text-xs font-semibold text-gray-900 dark:text-white">
+                        {featuredItems[0].name}
+                      </p>
+                      <p className="text-2xs text-gray-400">
+                        {formatPrice(featuredItems[0].price)}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -142,8 +162,12 @@ export default function Hero() {
                       </div>
                     )}
                     <div>
-                      <p className="text-xs font-semibold text-gray-900 dark:text-white">{featuredItems[1].name}</p>
-                      <p className="text-2xs text-gray-400">{formatPrice(featuredItems[1].price)}</p>
+                      <p className="text-xs font-semibold text-gray-900 dark:text-white">
+                        {featuredItems[1].name}
+                      </p>
+                      <p className="text-2xs text-gray-400">
+                        {formatPrice(featuredItems[1].price)}
+                      </p>
                     </div>
                   </div>
                 </div>
