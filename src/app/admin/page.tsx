@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { api, getImageUrl } from "@/lib/api";
 import { DashboardStats, MenuItem, GalleryImage } from "@/types";
 import { formatPrice } from "@/lib/utils";
@@ -11,6 +12,9 @@ import {
   HiOutlineFolder,
   HiOutlinePhoto,
   HiOutlineStar,
+  HiOutlineCheckCircle,
+  HiOutlinePlus,
+  HiOutlineArrowUpRight,
 } from "react-icons/hi2";
 
 export default function AdminDashboard() {
@@ -49,16 +53,18 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div>
-      <h1 className="text-lg font-bold text-gray-900 dark:text-white">
-        داشبورد
-      </h1>
-      <p className="mt-0.5 text-xs text-gray-400 dark:text-gray-500">
-        خلاصه‌ای از وضعیت سایت
-      </p>
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-lg font-bold text-gray-900 dark:text-white">
+          داشبورد
+        </h1>
+        <p className="mt-0.5 text-xs text-gray-400 dark:text-gray-500">
+          خلاصه‌ای از وضعیت سایت
+        </p>
+      </div>
 
       {stats && (
-        <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-3">
           <StatsCard
             title="آیتم‌های منو"
             value={stats.total_menu_items}
@@ -78,57 +84,100 @@ export default function AdminDashboard() {
             color="bg-purple-500"
           />
           <StatsCard
-            title="آیتم‌های ویژه"
+            title="ویژه"
             value={stats.featured_items}
             icon={<HiOutlineStar size={20} className="text-white" />}
-            color="bg-sakura-400"
+            color="bg-amber-500"
+          />
+          <StatsCard
+            title="موجود"
+            value={stats.available_items}
+            icon={<HiOutlineCheckCircle size={20} className="text-white" />}
+            color="bg-emerald-500"
+          />
+          <StatsCard
+            title="جدید"
+            value={stats.new_items}
+            icon={<HiOutlinePlus size={20} className="text-white" />}
+            color="bg-rose-500"
           />
         </div>
       )}
 
-      <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
+      <div className="flex flex-wrap gap-2">
+        <Link href="/admin/menu" className="btn-primary text-xs">
+          <HiOutlinePlus size={14} />
+          آیتم جدید
+        </Link>
+        <Link href="/admin/gallery" className="btn-secondary text-xs">
+          <HiOutlinePhoto size={14} />
+          گالری
+        </Link>
+        <Link href="/admin/settings" className="btn-ghost text-xs">
+          تنظیمات
+          <HiOutlineArrowUpRight size={14} />
+        </Link>
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-5">
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          className="rounded-xl border border-gray-100 bg-white p-5 dark:border-white/5 dark:bg-white/[0.02]"
+          className="rounded-2xl border border-gray-100 bg-white p-5 dark:border-white/5 dark:bg-white/[0.02] lg:col-span-3"
         >
-          <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
-            آخرین آیتم‌های منو
-          </h3>
-          <div className="mt-3.5 space-y-2">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
+              آخرین آیتم‌های منو
+            </h3>
+            <Link href="/admin/menu" className="text-2xs font-medium text-matcha-500 hover:text-matcha-600 dark:text-matcha-400">
+              مشاهده همه
+            </Link>
+          </div>
+          <div className="mt-4 space-y-2">
             {recentItems.map((item) => (
               <div
                 key={item.id}
-                className="flex items-center justify-between rounded-lg bg-gray-50/80 p-2.5 dark:bg-white/[0.02]"
+                className="flex items-center justify-between gap-3 rounded-xl bg-gray-50/80 p-3 transition-colors hover:bg-gray-100/80 dark:bg-white/[0.02] dark:hover:bg-white/[0.04]"
               >
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-3 min-w-0">
                   {item.image_url ? (
                     <img
                       src={getImageUrl(item.image_url)}
                       alt={item.name}
-                      className="h-8 w-8 rounded-lg object-cover"
+                      className="h-10 w-10 shrink-0 rounded-xl object-cover"
                     />
                   ) : (
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-matcha-50 text-sm dark:bg-matcha-900/30">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-matcha-50 text-base dark:bg-matcha-900/30">
                       🍡
                     </div>
                   )}
-                  <div>
-                    <p className="text-xs font-medium text-gray-800 dark:text-white">
+                  <div className="min-w-0">
+                    <p className="truncate text-sm font-medium text-gray-800 dark:text-white">
                       {item.name}
                     </p>
-                    <p className="text-2xs text-gray-400">{item.category_name}</p>
+                    <p className="mt-0.5 text-2xs text-gray-400 dark:text-gray-500">
+                      {item.category_name}
+                      {item.is_available === false && (
+                        <span className="mr-1.5 text-red-400">· ناموجود</span>
+                      )}
+                    </p>
                   </div>
                 </div>
-                <span className="text-xs font-bold text-matcha-500 dark:text-matcha-400">
+                <span className="shrink-0 text-xs font-bold text-matcha-500 dark:text-matcha-400">
                   {formatPrice(item.price)}
                 </span>
               </div>
             ))}
             {recentItems.length === 0 && (
-              <p className="py-6 text-center text-xs text-gray-400">
-                آیتمی وجود ندارد
-              </p>
+              <div className="py-10 text-center">
+                <p className="text-3xl">🍡</p>
+                <p className="mt-2 text-xs text-gray-400">
+                  آیتمی وجود ندارد
+                </p>
+                <Link href="/admin/menu" className="btn-primary mt-3 text-xs">
+                  افزودن آیتم
+                </Link>
+              </div>
             )}
           </div>
         </motion.div>
@@ -137,28 +186,36 @@ export default function AdminDashboard() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.08 }}
-          className="rounded-xl border border-gray-100 bg-white p-5 dark:border-white/5 dark:bg-white/[0.02]"
+          className="rounded-2xl border border-gray-100 bg-white p-5 dark:border-white/5 dark:bg-white/[0.02] lg:col-span-2"
         >
-          <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
-            آخرین تصاویر گالری
-          </h3>
-          <div className="mt-3.5 grid grid-cols-2 gap-2 sm:grid-cols-3">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
+              آخرین تصاویر
+            </h3>
+            <Link href="/admin/gallery" className="text-2xs font-medium text-matcha-500 hover:text-matcha-600 dark:text-matcha-400">
+              مشاهده همه
+            </Link>
+          </div>
+          <div className="mt-4 grid grid-cols-3 gap-2">
             {recentGallery.map((img) => (
               <div
                 key={img.id}
-                className="aspect-square overflow-hidden rounded-lg bg-gray-100 dark:bg-white/[0.02]"
+                className="aspect-square overflow-hidden rounded-xl bg-gray-100 dark:bg-white/[0.02]"
               >
                 <img
                   src={getImageUrl(img.image_url)}
                   alt={img.title || ""}
-                  className="h-full w-full object-cover"
+                  className="h-full w-full object-cover transition-transform duration-300 hover:scale-110"
                 />
               </div>
             ))}
             {recentGallery.length === 0 && (
-              <p className="col-span-3 py-6 text-center text-xs text-gray-400">
-                تصویری وجود ندارد
-              </p>
+              <div className="col-span-3 py-10 text-center">
+                <p className="text-3xl">📸</p>
+                <p className="mt-2 text-xs text-gray-400">
+                  تصویری وجود ندارد
+                </p>
+              </div>
             )}
           </div>
         </motion.div>

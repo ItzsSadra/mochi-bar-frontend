@@ -19,23 +19,23 @@ export default function AdminLoginPage() {
     try {
       await login(username, password);
       window.location.href = "/admin";
-    } catch (err: any) {
-      setError(err.message || "خطای ورود");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "خطای ورود");
       setLoading(false);
     }
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-cream-50 dark:bg-[#0c0c18]">
+    <div className="flex min-h-screen items-center justify-center bg-sand-50 px-4 dark:bg-[#0c0c18]">
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="w-full max-w-sm px-5"
+        className="w-full max-w-sm"
       >
-        <div className="rounded-2xl border border-gray-100 bg-white p-8 shadow-soft dark:border-white/5 dark:bg-[#111120]">
+        <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-soft dark:border-white/5 dark:bg-[#111120] sm:p-8">
           <div className="mb-6 text-center">
-            <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-matcha-400 text-lg text-white">
+            <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-matcha-400 text-lg text-white">
               🍡
             </div>
             <h1 className="text-base font-bold text-gray-900 dark:text-white">
@@ -64,6 +64,7 @@ export default function AdminLoginPage() {
                 className="input-field"
                 placeholder="admin"
                 required
+                autoComplete="username"
               />
             </div>
 
@@ -78,6 +79,7 @@ export default function AdminLoginPage() {
                 className="input-field"
                 placeholder="••••••••"
                 required
+                autoComplete="current-password"
               />
             </div>
 

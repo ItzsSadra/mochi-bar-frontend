@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import { api, getImageUrl } from "@/lib/api";
 import { MenuItem, Category } from "@/types";
 import { formatPrice } from "@/lib/utils";
@@ -158,7 +157,7 @@ export default function AdminMenuPage() {
             مدیریت منو
           </h1>
           <p className="mt-0.5 text-xs text-gray-400 dark:text-gray-500">
-            افزودن، ویرایش و حذف آیتم‌های منو
+            {items.length} آیتم · افزودن، ویرایش و حذف
           </p>
         </div>
         <button onClick={openCreate} className="btn-primary">
@@ -167,39 +166,39 @@ export default function AdminMenuPage() {
         </button>
       </div>
 
-      <div className="mt-6 overflow-hidden rounded-xl border border-gray-100 bg-white dark:border-white/5 dark:bg-white/[0.02]">
+      <div className="mt-6 hidden overflow-hidden rounded-2xl border border-gray-100 bg-white dark:border-white/5 dark:bg-white/[0.02] lg:block">
         <div className="overflow-x-auto">
           <table className="w-full text-right text-sm" aria-label="لیست آیتم‌های منو">
             <thead className="border-b border-gray-100 dark:border-white/5">
               <tr>
-                <th className="px-4 py-2.5 text-xs font-medium text-gray-400">نام</th>
-                <th className="px-4 py-2.5 text-xs font-medium text-gray-400">دسته‌بندی</th>
-                <th className="px-4 py-2.5 text-xs font-medium text-gray-400">قیمت</th>
-                <th className="px-4 py-2.5 text-xs font-medium text-gray-400">وضعیت</th>
-                <th className="px-4 py-2.5 text-xs font-medium text-gray-400">عملیات</th>
+                <th className="px-5 py-3 text-xs font-medium text-gray-400">نام</th>
+                <th className="px-5 py-3 text-xs font-medium text-gray-400">دسته‌بندی</th>
+                <th className="px-5 py-3 text-xs font-medium text-gray-400">قیمت</th>
+                <th className="px-5 py-3 text-xs font-medium text-gray-400">وضعیت</th>
+                <th className="px-5 py-3 text-xs font-medium text-gray-400">عملیات</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50 dark:divide-white/5">
               {items.map((item) => (
                 <tr key={item.id} className="transition-colors hover:bg-gray-50/50 dark:hover:bg-white/[0.01]">
-                  <td className="px-4 py-3">
-                    <div className="flex items-center gap-2.5">
+                  <td className="px-5 py-3.5">
+                    <div className="flex items-center gap-3">
                       {item.image_url ? (
                         <img
                           src={getImageUrl(item.image_url)}
                           alt={item.name}
-                          className="h-8 w-8 rounded-lg object-cover"
+                          className="h-9 w-9 rounded-xl object-cover"
                         />
                       ) : (
-                        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-matcha-50 text-sm dark:bg-matcha-900/30">
+                        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-matcha-50 text-sm dark:bg-matcha-900/30">
                           🍡
                         </div>
                       )}
                       <div>
                         <p className="text-sm font-medium text-gray-800 dark:text-white">{item.name}</p>
-                        <div className="flex gap-1.5">
+                        <div className="mt-0.5 flex gap-1.5">
                           {item.is_featured && (
-                            <span className="text-2xs text-sakura-400">ویژه</span>
+                            <span className="text-2xs text-amber-500">ویژه</span>
                           )}
                           {item.is_new && (
                             <span className="text-2xs text-matcha-500">جدید</span>
@@ -208,13 +207,13 @@ export default function AdminMenuPage() {
                       </div>
                     </div>
                   </td>
-                  <td className="px-4 py-3 text-xs text-gray-400">{item.category_name}</td>
-                  <td className="px-4 py-3 text-sm font-medium text-matcha-500 dark:text-matcha-400">
+                  <td className="px-5 py-3.5 text-xs text-gray-400">{item.category_name}</td>
+                  <td className="px-5 py-3.5 text-sm font-medium text-matcha-500 dark:text-matcha-400">
                     {formatPrice(item.price)}
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-5 py-3.5">
                     <span
-                      className={`inline-block rounded-md px-2 py-0.5 text-2xs font-medium ${
+                      className={`inline-block rounded-lg px-2 py-0.5 text-2xs font-medium ${
                         item.is_available
                           ? "bg-green-50 text-green-600 dark:bg-green-900/20 dark:text-green-400"
                           : "bg-red-50 text-red-600 dark:bg-red-900/20 dark:text-red-400"
@@ -223,18 +222,18 @@ export default function AdminMenuPage() {
                       {item.is_available ? "موجود" : "ناموجود"}
                     </span>
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-5 py-3.5">
                     <div className="flex gap-1">
                       <button
                         onClick={() => openEdit(item)}
-                        className="rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-gray-100 hover:text-matcha-500 dark:hover:bg-white/5"
+                        className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-matcha-500 dark:hover:bg-white/5"
                         aria-label="ویرایش"
                       >
                         <HiOutlinePencilSquare size={16} />
                       </button>
                       <button
                         onClick={() => handleDelete(item.id)}
-                        className="rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-900/10"
+                        className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-900/10"
                         aria-label="حذف"
                       >
                         <HiOutlineTrash size={16} />
@@ -248,6 +247,92 @@ export default function AdminMenuPage() {
         </div>
       </div>
 
+      <div className="mt-6 grid grid-cols-1 gap-3 lg:hidden">
+        {items.map((item) => (
+          <div
+            key={item.id}
+            className="flex items-center gap-3 rounded-2xl border border-gray-100 bg-white p-3.5 dark:border-white/5 dark:bg-white/[0.02]"
+          >
+            {item.image_url ? (
+              <img
+                src={getImageUrl(item.image_url)}
+                alt={item.name}
+                className="h-14 w-14 shrink-0 rounded-xl object-cover"
+              />
+            ) : (
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-matcha-50 text-xl dark:bg-matcha-900/30">
+                🍡
+              </div>
+            )}
+            <div className="min-w-0 flex-1">
+              <div className="flex items-start justify-between gap-2">
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-medium text-gray-800 dark:text-white">
+                    {item.name}
+                  </p>
+                  <p className="mt-0.5 text-2xs text-gray-400 dark:text-gray-500">
+                    {item.category_name}
+                  </p>
+                </div>
+                <span className="shrink-0 text-xs font-bold text-matcha-500 dark:text-matcha-400">
+                  {formatPrice(item.price)}
+                </span>
+              </div>
+              <div className="mt-2 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span
+                    className={`rounded-md px-1.5 py-0.5 text-2xs font-medium ${
+                      item.is_available
+                        ? "bg-green-50 text-green-600 dark:bg-green-900/20 dark:text-green-400"
+                        : "bg-red-50 text-red-600 dark:bg-red-900/20 dark:text-red-400"
+                    }`}
+                  >
+                    {item.is_available ? "موجود" : "ناموجود"}
+                  </span>
+                  {item.is_featured && (
+                    <span className="rounded-md bg-amber-50 px-1.5 py-0.5 text-2xs font-medium text-amber-600 dark:bg-amber-900/20 dark:text-amber-400">
+                      ویژه
+                    </span>
+                  )}
+                  {item.is_new && (
+                    <span className="rounded-md bg-matcha-50 px-1.5 py-0.5 text-2xs font-medium text-matcha-600 dark:bg-matcha-900/20 dark:text-matcha-400">
+                      جدید
+                    </span>
+                  )}
+                </div>
+                <div className="flex gap-0.5">
+                  <button
+                    onClick={() => openEdit(item)}
+                    className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-matcha-500 dark:hover:bg-white/5"
+                    aria-label="ویرایش"
+                  >
+                    <HiOutlinePencilSquare size={16} />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(item.id)}
+                    className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-900/10"
+                    aria-label="حذف"
+                  >
+                    <HiOutlineTrash size={16} />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {items.length === 0 && (
+        <div className="py-16 text-center">
+          <p className="text-4xl">🍡</p>
+          <p className="mt-3 text-sm text-gray-400">آیتمی وجود ندارد</p>
+          <button onClick={openCreate} className="btn-primary mt-4 text-sm">
+            <HiOutlinePlus size={16} />
+            افزودن اولین آیتم
+          </button>
+        </div>
+      )}
+
       <Modal
         isOpen={showModal}
         onClose={() => setShowModal(false)}
@@ -255,7 +340,7 @@ export default function AdminMenuPage() {
         size="lg"
       >
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <label className="mb-1 block text-xs font-medium text-gray-600 dark:text-gray-300">نام</label>
               <input
@@ -352,12 +437,12 @@ export default function AdminMenuPage() {
               <img
                 src={getImageUrl(form.image_url)}
                 alt=""
-                className="mt-2 h-16 w-16 rounded-lg object-cover"
+                className="mt-2 h-20 w-20 rounded-xl object-cover"
               />
             )}
           </div>
 
-          <div className="flex gap-5">
+          <div className="flex flex-wrap gap-5">
             <label className="flex items-center gap-2 text-sm">
               <input
                 type="checkbox"

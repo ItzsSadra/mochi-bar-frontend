@@ -33,8 +33,8 @@ export default function Footer() {
   return (
     <footer className="border-t border-gray-100 bg-white dark:border-white/5 dark:bg-[#0c0c18]">
       <div className="mx-auto max-w-6xl px-5 py-10 sm:px-6 sm:py-14 lg:px-8">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-4">
-          <div className="md:col-span-2">
+        <div className="grid grid-cols-2 gap-8 sm:gap-10 md:grid-cols-4">
+          <div className="col-span-2">
             <div className="flex items-center gap-2.5">
               <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-matcha-400 text-lg text-white">
                 🍡
@@ -98,20 +98,20 @@ export default function Footer() {
               تماس با ما
             </h4>
             <ul className="mt-3.5 space-y-3">
-              <li className="flex items-center gap-2.5">
-                <FaMapMarkerAlt className="text-matcha-400" size={13} />
+              <li className="flex items-start gap-2.5">
+                <FaMapMarkerAlt className="mt-0.5 shrink-0 text-matcha-400" size={13} />
                 <span className="text-sm text-gray-500 dark:text-gray-400">
                   {address}
                 </span>
               </li>
               <li className="flex items-center gap-2.5">
-                <FaPhone className="text-matcha-400" size={13} />
+                <FaPhone className="shrink-0 text-matcha-400" size={13} />
                 <span className="text-sm text-gray-500 dark:text-gray-400" dir="ltr">
                   {phone}
                 </span>
               </li>
               <li className="flex items-center gap-2.5">
-                <FaInstagram className="text-matcha-400" size={13} />
+                <FaInstagram className="shrink-0 text-matcha-400" size={13} />
                 <span className="text-sm text-gray-500 dark:text-gray-400">
                   {instagram}
                 </span>

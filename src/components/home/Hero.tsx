@@ -24,14 +24,14 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-cream-50 dark:bg-[#0c0c18]">
+    <section className="relative min-h-[90vh] overflow-hidden bg-cream-50 dark:bg-[#0c0c18] sm:min-h-screen">
       <div className="absolute inset-0">
-        <div className="absolute -right-32 -top-32 h-[500px] w-[500px] rounded-full bg-matcha-200/30 blur-[120px]" />
-        <div className="absolute -bottom-32 -left-32 h-[400px] w-[400px] rounded-full bg-sakura-200/20 blur-[100px]" />
+        <div className="absolute -right-32 -top-32 h-[400px] w-[400px] rounded-full bg-matcha-200/30 blur-[120px] sm:h-[500px] sm:w-[500px]" />
+        <div className="absolute -bottom-32 -left-32 h-[300px] w-[300px] rounded-full bg-sakura-200/20 blur-[100px] sm:h-[400px] sm:w-[400px]" />
       </div>
 
-      <div className="relative mx-auto flex min-h-screen max-w-6xl items-center px-5 sm:px-6 lg:px-8">
-        <div className="grid w-full grid-cols-1 items-center gap-16 lg:grid-cols-2">
+      <div className="relative mx-auto flex min-h-[90vh] max-w-6xl items-center px-5 sm:min-h-screen sm:px-6 lg:px-8">
+        <div className="grid w-full grid-cols-1 items-center gap-10 sm:gap-16 lg:grid-cols-2">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
@@ -41,21 +41,21 @@ export default function Hero() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.15, duration: 0.5 }}
-              className="mb-5 inline-flex items-center gap-2 rounded-full border border-matcha-200 bg-matcha-50 px-3.5 py-1.5 text-xs font-medium text-matcha-600 dark:border-matcha-800 dark:bg-matcha-950/50 dark:text-matcha-300"
+              className="mb-4 inline-flex items-center gap-2 rounded-full border border-matcha-200 bg-matcha-50 px-3 py-1.5 text-2xs font-medium text-matcha-600 dark:border-matcha-800 dark:bg-matcha-950/50 dark:text-matcha-300 sm:mb-5 sm:px-3.5 sm:text-xs"
             >
               <span>🍡</span>
               تجربه‌ای متفاوت از طعم و هنر ژاپنی
             </motion.div>
 
-            <h1 className="text-4xl font-bold leading-[1.15] tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">
+            <h1 className="text-3xl font-bold leading-[1.15] tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">
               {heroText}
             </h1>
 
-            <p className="mt-5 max-w-md text-base leading-relaxed text-gray-500 dark:text-gray-400 lg:text-lg">
+            <p className="mt-4 max-w-md text-sm leading-relaxed text-gray-500 dark:text-gray-400 sm:mt-5 sm:text-base lg:text-lg">
               {heroSubtext}
             </p>
 
-            <div className="mt-7 flex flex-wrap items-center gap-3">
+            <div className="mt-6 flex flex-wrap items-center gap-3 sm:mt-7">
               <Link href="/menu" className="btn-primary">
                 مشاهده منو
               </Link>
@@ -64,18 +64,18 @@ export default function Hero() {
               </Link>
             </div>
 
-            <div className="mt-12 flex flex-wrap items-center gap-6 sm:gap-7">
+            <div className="mt-10 flex items-center gap-4 sm:mt-12 sm:gap-6">
               {[
                 { value: "۵۰+", label: "نوع نوشیدنی" },
                 { value: "۳۰+", label: "نوع دسر" },
                 { value: "۱۰۰۰+", label: "مشتری راضی" },
               ].map((stat, i) => (
-                <div key={i} className="flex items-center gap-6 sm:gap-7">
+                <div key={i} className="flex items-center gap-4 sm:gap-6">
                   <div>
-                    <p className="text-2xl font-bold text-matcha-500 dark:text-matcha-400">
+                    <p className="text-xl font-bold text-matcha-500 dark:text-matcha-400 sm:text-2xl">
                       {stat.value}
                     </p>
-                    <p className="text-xs text-gray-400 dark:text-gray-500">
+                    <p className="text-2xs text-gray-400 dark:text-gray-500 sm:text-xs">
                       {stat.label}
                     </p>
                   </div>

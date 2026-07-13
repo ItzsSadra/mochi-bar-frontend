@@ -115,7 +115,7 @@ export default function AdminMediaPage() {
             کتابخانه رسانه
           </h1>
           <p className="mt-0.5 text-xs text-gray-400 dark:text-gray-500">
-            مدیریت فایل‌های رسانه
+            {media.length} فایل · مدیریت فایل‌های رسانه
           </p>
         </div>
         <label className="btn-primary cursor-pointer">
@@ -132,7 +132,7 @@ export default function AdminMediaPage() {
       </div>
 
       <div className="mt-5 flex flex-wrap items-center gap-3">
-        <div className="relative flex-1 md:w-56">
+        <div className="relative min-w-0 flex-1 sm:max-w-xs">
           <input
             type="text"
             placeholder="جستجو..."
@@ -143,7 +143,7 @@ export default function AdminMediaPage() {
           />
           <HiOutlineMagnifyingGlass className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
         </div>
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex min-w-0 flex-wrap gap-1.5">
           <button
             onClick={() => setSelectedFolder("")}
             className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-all ${
@@ -171,13 +171,13 @@ export default function AdminMediaPage() {
       </div>
 
       {uploadError && (
-        <div className="mt-3 rounded-lg bg-red-50 p-2.5 text-center text-xs text-red-500 dark:bg-red-900/20 dark:text-red-400">
+        <div className="mt-3 rounded-xl bg-red-50 p-3 text-center text-xs text-red-500 dark:bg-red-900/20 dark:text-red-400">
           {uploadError}
         </div>
       )}
 
       {uploading && (
-        <div className="mt-3 rounded-lg bg-matcha-50 p-3 dark:bg-matcha-900/20">
+        <div className="mt-3 rounded-xl bg-matcha-50 p-3 dark:bg-matcha-900/20">
           <div className="mb-1.5 flex items-center justify-between text-xs">
             <span className="text-matcha-600 dark:text-matcha-400">
               {uploadProgress.total > 1
@@ -201,7 +201,7 @@ export default function AdminMediaPage() {
         </div>
       )}
 
-      <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+      <div className="mt-5 grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
         {media.map((item, index) => (
           <motion.div
             key={item.id}
@@ -215,15 +215,15 @@ export default function AdminMediaPage() {
               alt={item.alt_text || item.original_name}
               className="aspect-square w-full object-cover"
             />
-            <div className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 transition-opacity group-hover:opacity-100">
+            <div className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
               <button
                 onClick={() => handleDelete(item.id)}
-                className="rounded-lg bg-red-500/80 p-1.5 text-white transition-colors hover:bg-red-500"
+                className="rounded-xl bg-red-500/80 p-2.5 text-white transition-colors hover:bg-red-500"
               >
                 <HiOutlineTrash size={16} />
               </button>
             </div>
-            <div className="p-1.5">
+            <div className="p-2">
               <p className="truncate text-2xs text-gray-500 dark:text-gray-400">
                 {item.original_name}
               </p>
@@ -236,7 +236,7 @@ export default function AdminMediaPage() {
       {media.length === 0 && (
         <div className="py-16 text-center">
           <p className="text-4xl">📁</p>
-          <p className="mt-3 text-xs text-gray-400">فایلی یافت نشد</p>
+          <p className="mt-3 text-sm text-gray-400">فایلی یافت نشد</p>
         </div>
       )}
     </div>

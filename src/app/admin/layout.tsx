@@ -42,13 +42,13 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
 
       <button
         onClick={() => setSidebarOpen(true)}
-        className="fixed left-4 top-4 z-30 rounded-lg bg-white p-2 shadow-sm border border-gray-100 text-gray-600 hover:bg-gray-50 lg:hidden dark:bg-gray-900 dark:border-white/10 dark:text-gray-300"
+        className="fixed left-3 top-3 z-30 rounded-xl bg-white p-2.5 shadow-sm border border-gray-100 text-gray-600 transition-all hover:bg-gray-50 hover:shadow-md lg:hidden dark:bg-gray-900 dark:border-white/10 dark:text-gray-300 dark:hover:bg-gray-800"
         aria-label="باز کردن منو"
       >
         <HiOutlineBars3 size={20} />
       </button>
 
-      <div className="pt-14 lg:pt-0 lg:mr-60 p-3 sm:p-6">
+      <div className="pt-14 lg:pt-6 lg:mr-60 px-4 pb-6 sm:px-6 lg:px-8">
         {children}
       </div>
     </div>

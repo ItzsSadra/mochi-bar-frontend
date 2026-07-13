@@ -60,7 +60,7 @@ export default function AdminGalleryPage() {
     setUploadPercent(0);
     try {
       const data = await api.uploadFileWithProgress(file, "gallery", setUploadPercent);
-      setForm({ ...form, image_url: data.media.file_path });
+      setForm((prev) => ({ ...prev, image_url: data.media.file_path }));
     } finally {
       setUploading(false);
       setUploadPercent(0);
@@ -121,7 +121,7 @@ export default function AdminGalleryPage() {
         <div>
           <h1 className="text-lg font-bold text-gray-900 dark:text-white">گالری</h1>
           <p className="mt-0.5 text-xs text-gray-400 dark:text-gray-500">
-            مدیریت تصاویر گالری
+            {images.length} تصویر · مدیریت تصاویر گالری
           </p>
         </div>
         <button onClick={openCreate} className="btn-primary">
@@ -130,49 +130,60 @@ export default function AdminGalleryPage() {
         </button>
       </div>
 
-      <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
+      <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
         {images.map((img, index) => (
           <motion.div
             key={img.id}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: index * 0.04 }}
-            className="group relative overflow-hidden rounded-xl bg-gray-100 dark:bg-white/[0.02]"
+            className="group relative overflow-hidden rounded-2xl bg-gray-100 dark:bg-white/[0.02]"
           >
             <img
               src={getImageUrl(img.image_url)}
               alt={img.title || ""}
               className="aspect-square w-full object-cover"
             />
-            <div className="absolute inset-0 flex items-center justify-center gap-1.5 bg-black/50 opacity-0 transition-opacity group-hover:opacity-100">
+            <div className="absolute inset-0 flex items-center justify-center gap-2 bg-black/50 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
               <button
                 onClick={() => openEdit(img)}
-                className="rounded-lg bg-white/20 p-1.5 text-white backdrop-blur-sm transition-colors hover:bg-white/30"
+                className="rounded-xl bg-white/20 p-2.5 text-white backdrop-blur-sm transition-colors hover:bg-white/30"
                 aria-label="ویرایش"
               >
-                <HiOutlinePencilSquare size={16} />
+                <HiOutlinePencilSquare size={18} />
               </button>
               <button
                 onClick={() => handleDelete(img.id)}
-                className="rounded-lg bg-red-500/50 p-1.5 text-white backdrop-blur-sm transition-colors hover:bg-red-500/70"
+                className="rounded-xl bg-red-500/50 p-2.5 text-white backdrop-blur-sm transition-colors hover:bg-red-500/70"
                 aria-label="حذف"
               >
-                <HiOutlineTrash size={16} />
+                <HiOutlineTrash size={18} />
               </button>
             </div>
             {(img.title || img.caption) && (
-              <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 p-2.5">
+              <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 p-3">
                 {img.title && (
                   <p className="text-xs font-semibold text-white">{img.title}</p>
                 )}
                 {img.caption && (
-                  <p className="text-2xs text-gray-300">{img.caption}</p>
+                  <p className="mt-0.5 text-2xs text-gray-300 line-clamp-1">{img.caption}</p>
                 )}
               </div>
             )}
           </motion.div>
         ))}
       </div>
+
+      {images.length === 0 && (
+        <div className="py-16 text-center">
+          <p className="text-4xl">📸</p>
+          <p className="mt-3 text-sm text-gray-400">تصویری وجود ندارد</p>
+          <button onClick={openCreate} className="btn-primary mt-4 text-sm">
+            <HiOutlinePlus size={16} />
+            افزودن اولین تصویر
+          </button>
+        </div>
+      )}
 
       <Modal
         isOpen={showModal}
@@ -189,12 +200,12 @@ export default function AdminGalleryPage() {
               className="input-field"
             />
             {uploading && (
-              <div className="mt-2 rounded-lg bg-matcha-50 p-2 dark:bg-matcha-900/20">
-                <div className="mb-1 flex items-center justify-between text-2xs">
+              <div className="mt-2 rounded-xl bg-matcha-50 p-3 dark:bg-matcha-900/20">
+                <div className="mb-1.5 flex items-center justify-between text-2xs">
                   <span className="text-matcha-600 dark:text-matcha-400">در حال آپلود...</span>
                   <span className="font-medium text-matcha-600 dark:text-matcha-400">{uploadPercent}%</span>
                 </div>
-                <div className="h-1 w-full overflow-hidden rounded-full bg-matcha-200/50 dark:bg-matcha-800/30">
+                <div className="h-1.5 w-full overflow-hidden rounded-full bg-matcha-200/50 dark:bg-matcha-800/30">
                   <div
                     className="h-full rounded-full bg-matcha-400 transition-all duration-300 ease-out dark:bg-matcha-500"
                     style={{ width: `${uploadPercent}%` }}
@@ -206,7 +217,7 @@ export default function AdminGalleryPage() {
               <img
                 src={getImageUrl(form.image_url)}
                 alt=""
-                className="mt-2 h-24 w-full rounded-lg object-cover"
+                className="mt-3 h-28 w-full rounded-xl object-cover"
               />
             )}
           </div>

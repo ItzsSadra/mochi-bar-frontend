@@ -113,7 +113,7 @@ export default function AdminCategoriesPage() {
             دسته‌بندی‌ها
           </h1>
           <p className="mt-0.5 text-xs text-gray-400 dark:text-gray-500">
-            مدیریت دسته‌بندی‌های منو
+            {categories.length} دسته‌بندی · مدیریت دسته‌بندی‌های منو
           </p>
         </div>
         <button onClick={openCreate} className="btn-primary">
@@ -129,36 +129,36 @@ export default function AdminCategoriesPage() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.04 }}
-            className="rounded-xl border border-gray-100 bg-white p-4 dark:border-white/5 dark:bg-white/[0.02]"
+            className="group rounded-2xl border border-gray-100 bg-white p-4 transition-all duration-200 hover:shadow-soft dark:border-white/5 dark:bg-white/[0.02]"
           >
             <div className="flex items-start justify-between">
-              <div className="flex items-center gap-2.5">
-                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-matcha-50 text-lg dark:bg-matcha-900/30">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-matcha-50 text-lg dark:bg-matcha-900/30">
                   {cat.icon || "📁"}
                 </div>
                 <div>
                   <h3 className="text-sm font-semibold text-gray-900 dark:text-white">{cat.name}</h3>
-                  <p className="text-2xs text-gray-400">{cat.item_count} آیتم</p>
+                  <p className="mt-0.5 text-2xs text-gray-400">{cat.item_count} آیتم</p>
                 </div>
               </div>
-              <div className="flex gap-0.5">
+              <div className="flex gap-0.5 opacity-0 transition-opacity group-hover:opacity-100 sm:opacity-0">
                 <button
                   onClick={() => openEdit(cat)}
-                  className="rounded-md p-1.5 text-gray-400 transition-colors hover:text-matcha-500"
+                  className="rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-gray-100 hover:text-matcha-500 dark:hover:bg-white/5"
                 >
                   <HiOutlinePencilSquare size={15} />
                 </button>
                 <button
                   onClick={() => handleDelete(cat.id)}
-                  className="rounded-md p-1.5 text-gray-400 transition-colors hover:text-red-500"
+                  className="rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-900/10"
                 >
                   <HiOutlineTrash size={15} />
                 </button>
               </div>
             </div>
-            <div className="mt-2.5 flex items-center gap-2">
+            <div className="mt-3 flex items-center gap-2">
               <span
-                className={`rounded-md px-1.5 py-0.5 text-2xs font-medium ${
+                className={`rounded-lg px-2 py-0.5 text-2xs font-medium ${
                   cat.is_active
                     ? "bg-green-50 text-green-600 dark:bg-green-900/20 dark:text-green-400"
                     : "bg-red-50 text-red-600 dark:bg-red-900/20 dark:text-red-400"

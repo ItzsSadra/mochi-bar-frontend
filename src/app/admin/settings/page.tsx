@@ -130,14 +130,14 @@ export default function AdminSettingsPage() {
         </button>
       </div>
 
-      <div className="mt-6 space-y-5">
+      <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
         {sections.map((section, sIndex) => (
           <motion.div
             key={section.title}
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: sIndex * 0.08 }}
-            className="rounded-xl border border-gray-100 bg-white p-5 dark:border-white/5 dark:bg-white/[0.02]"
+            transition={{ delay: sIndex * 0.06 }}
+            className="rounded-2xl border border-gray-100 bg-white p-5 dark:border-white/5 dark:bg-white/[0.02]"
           >
             <h3 className="mb-4 text-sm font-semibold text-gray-900 dark:text-white">
               {section.title}
@@ -161,7 +161,7 @@ export default function AdminSettingsPage() {
                         type="color"
                         value={settings[field.key] || "#6B8F71"}
                         onChange={(e) => handleChange(field.key, e.target.value)}
-                        className="h-9 w-9 cursor-pointer rounded-lg border-0"
+                        className="h-9 w-9 shrink-0 cursor-pointer rounded-lg border-0"
                       />
                       <input
                         type="text"
