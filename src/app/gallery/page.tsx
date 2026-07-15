@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import GalleryPageClient from "@/components/gallery/GalleryPageClient";
 
 export const metadata: Metadata = {
-  title: "گالری | موچی بار",
-  description: "گالری تصاویر موچی بار — فضای دنج کافه، موچی‌های دست‌ساز و لحظات زیبا.",
+  title: "گالری | تبارستان",
+  description: "گالری تصاویر تبارستان — محصولات با کیفیت و تازه.",
   openGraph: {
-    title: "گالری موچی بار",
-    description: "تصاویری از فضای دنج و محصولات خاص ما",
+    title: "گالری تبارستان",
+    description: "تصاویری از محصولات با کیفیت ما",
   },
 };
 

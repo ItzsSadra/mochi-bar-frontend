@@ -9,7 +9,7 @@ export default function Loading() {
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
-          className="h-6 w-6 rounded-full border-2 border-matcha-400 border-t-transparent motion-reduce:animate-none"
+          className="h-6 w-6 rounded-full border-2 border-navy-500 border-t-transparent motion-reduce:animate-none"
           role="status"
           aria-label="در حال بارگذاری"
         />

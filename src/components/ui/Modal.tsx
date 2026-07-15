@@ -71,7 +71,7 @@ export default function Modal({ isOpen, onClose, title, children, size = "md" }:
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="absolute inset-0 backdrop-blur-xl"
-            style={{ background: "rgba(0,0,0,0.3)" }}
+            style={{ background: "rgba(7,11,20,0.6)" }}
             onClick={onClose}
             aria-hidden="true"
           />

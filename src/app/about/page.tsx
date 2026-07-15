@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import AboutPageClient from "@/components/about/AboutPageClient";
 
 export const metadata: Metadata = {
-  title: "درباره ما | موچی بار",
-  description: "داستان موچی بار — الهام از هنر و فرهنگ ژاپنی، موچی‌های دست‌ساز با بهترین مواد اولیه در اصفهان.",
+  title: "درباره ما | تبارستان",
+  description:
+    "داستان تبارستان — تامین کننده انواع میوه خشک و نوشیدنی‌های خاص با کیفیت بالا.",
   openGraph: {
-    title: "درباره موچی بار",
-    description: "داستان ما و فلسفه‌مان در تهیه بهترین موچی و نوشیدنی‌های ژاپنی",
+    title: "درباره تبارستان",
+    description: "تامین کننده انواع میوه خشک و نوشیدنی‌های خاص",
   },
 };
 

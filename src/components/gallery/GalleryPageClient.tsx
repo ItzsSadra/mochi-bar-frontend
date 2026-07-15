@@ -34,7 +34,7 @@ export default function GalleryPageClient() {
           >
             <h1 className="section-title">گالری</h1>
             <p className="section-subtitle">
-              لحظات زیبای ما را ببینید
+              تصاویری از محصولات با کیفیت ما
             </p>
           </motion.div>
 

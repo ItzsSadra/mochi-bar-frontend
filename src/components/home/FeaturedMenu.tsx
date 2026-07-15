@@ -1,176 +1,202 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
-import { api, getImageUrl } from "@/lib/api";
-import { MenuItem } from "@/types";
-import { formatPrice } from "@/lib/utils";
-import { FeaturedSkeleton } from "@/components/ui/Skeleton";
+
+const driedFruits = [
+  { name: "پرتقال", emoji: "🍊", desc: "خشک شده با روش طبیعی" },
+  { name: "گوجه", emoji: "🍅", desc: "ترد و خوشمزه" },
+  { name: "کیوی", emoji: "🥝", desc: "ویتامین‌دار و تازه" },
+  { name: "موز", emoji: "🍌", desc: "شیرین و طبیعی" },
+  { name: "نارنگی", emoji: "🍈", desc: "ویژه فصل" },
+  { name: "هلو", emoji: "🍑", desc: "تازه و معطر" },
+  { name: "انواع میوه فصل", emoji: "🍇", desc: "متنوع و تازه" },
+];
+
+const beverages = [
+  { name: "استرا", emoji: "🥤", desc: "نوشیدنی خاص و منحصربفرد" },
+  { name: "دراگون", emoji: "🧃", desc: "ترکیبی از طعم‌های خاص" },
+  { name: "شات فون", emoji: "🍹", desc: "تازه و گوارا" },
+  { name: "نارفیس", emoji: "🥛", desc: "نوشیدنی سالم و طبیعی" },
+  { name: "تیکامون", emoji: "🍵", desc: "انرژی‌بخش" },
+  { name: "اکلیسا", emoji: "🍷", desc: "لوکس و ویژه" },
+];
+
+function ProductCard({
+  item,
+  index,
+  variant,
+}: {
+  item: { name: string; emoji: string; desc: string };
+  index: number;
+  variant: "fruit" | "drink";
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{
+        duration: 0.5,
+        delay: index * 0.06,
+        ease: [0.16, 1, 0.3, 1],
+      }}
+    >
+      <motion.div
+        whileHover={{ y: -6, scale: 1.02 }}
+        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        className="glass-card group cursor-pointer overflow-hidden p-6 text-center"
+      >
+        <div
+          className="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl text-4xl transition-all duration-500 group-hover:scale-110"
+          style={{
+            background: variant === "fruit" ? "rgba(30,58,138,0.08)" : "rgba(59,130,246,0.08)",
+            border: `1px solid ${variant === "fruit" ? "rgba(30,58,138,0.12)" : "rgba(59,130,246,0.12)"}`,
+          }}
+        >
+          {item.emoji}
+        </div>
+
+        <h3
+          className="mt-4 text-base font-bold transition-colors duration-300"
+          style={{ color: "var(--foreground)" }}
+        >
+          {item.name}
+        </h3>
+        <p
+          className="mt-1.5 text-xs leading-relaxed"
+          style={{ color: "var(--muted)" }}
+        >
+          {item.desc}
+        </p>
+
+        <div
+          className="mt-4 h-px opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          style={{
+            background:
+              "linear-gradient(90deg, transparent, rgba(59,130,246,0.25), transparent)",
+          }}
+        />
+      </motion.div>
+    </motion.div>
+  );
+}
 
 export default function FeaturedMenu() {
-  const [items, setItems] = useState<MenuItem[]>([]);
-  const [loading, setLoading] = useState(true);
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
 
-  useEffect(() => {
-    api.getMenu({ featured: true }).then((data) => setItems(data.items.slice(0, 4))).catch(() => {}).finally(() => setLoading(false));
-  }, []);
-
   return (
-    <section ref={ref} className="relative py-16 sm:py-24 lg:py-32" style={{ background: "var(--background)" }}>
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute right-0 top-1/4 h-[300px] w-[300px] sm:h-[500px] sm:w-[500px] rounded-full" style={{ background: "radial-gradient(circle, rgba(107,143,113,0.04) 0%, transparent 70%)", filter: "blur(60px)" }} />
+    <section
+      ref={ref}
+      className="relative py-20 sm:py-28 lg:py-36"
+      style={{ background: "transparent" }}
+    >
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div
+          className="absolute right-0 top-1/4 h-[300px] w-[300px] sm:h-[500px] sm:w-[500px] rounded-full"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(30,58,138,0.06) 0%, transparent 70%)",
+            filter: "blur(60px)",
+          }}
+        />
       </div>
 
       <div className="relative mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7 }}
+          className="text-center"
+        >
+          <span className="section-label">محصولات ما</span>
+          <h2 className="section-title mt-2.5">میوه خشک</h2>
+          <p className="section-subtitle mx-auto">
+            انواع میوه خشک با کیفیت بالا و طعم بی‌نظیر
+          </p>
+        </motion.div>
+
+        <div className="mt-10 sm:hidden">
+          <div className="flex gap-3 overflow-x-auto pb-3 -mx-5 px-5 scrollbar-none scroll-snap-x">
+            {driedFruits.map((item, index) => (
+              <div
+                key={index}
+                className="flex-shrink-0 snap-start"
+                style={{ width: "min(65vw, 240px)" }}
+              >
+                <ProductCard item={item} index={index} variant="fruit" />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-10 hidden sm:grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+          {driedFruits.map((item, index) => (
+            <ProductCard
+              key={index}
+              item={item}
+              index={index}
+              variant="fruit"
+            />
+          ))}
+        </div>
+
+        <div className="mt-20 sm:mt-28">
+          <div className="premium-divider mb-16 sm:mb-20" />
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.7 }}
+            className="text-center"
           >
-            <span className="section-label">پیشنهاد ویژه</span>
-            <h2 className="section-title mt-2.5">محبوب‌ترین‌های ما</h2>
-            <p className="section-subtitle">از بهترین مواد اولیه و با عشق تهیه شده</p>
+            <span className="section-label">نوشیدنی‌های خاص</span>
+            <h2 className="section-title mt-2.5">نوشیدنی</h2>
+            <p className="section-subtitle mx-auto">
+              نوشیدنی‌های منحصربفرد و خاص با بهترین کیفیت
+            </p>
           </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="hidden sm:block"
-          >
-            <Link href="/menu" className="btn-secondary">
-              مشاهده کل منو →
-            </Link>
-          </motion.div>
+
+          <div className="mt-10 sm:hidden">
+            <div className="flex gap-3 overflow-x-auto pb-3 -mx-5 px-5 scrollbar-none scroll-snap-x">
+              {beverages.map((item, index) => (
+                <div
+                  key={index}
+                  className="flex-shrink-0 snap-start"
+                  style={{ width: "min(65vw, 240px)" }}
+                >
+                  <ProductCard item={item} index={index} variant="drink" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-10 hidden sm:grid grid-cols-2 gap-4 md:grid-cols-3">
+            {beverages.map((item, index) => (
+              <ProductCard
+                key={index}
+                item={item}
+                index={index}
+                variant="drink"
+              />
+            ))}
+          </div>
         </div>
 
-        {/* Mobile: horizontal scroll carousel */}
-        <div className="mt-8 sm:mt-12">
-          {loading ? (
-            <FeaturedSkeleton />
-          ) : (
-            <>
-              {/* Mobile horizontal scroll */}
-              <div className="sm:hidden flex gap-3 overflow-x-auto pb-3 -mx-5 px-5 scrollbar-none snap-x snap-mandatory">
-                {items.map((item, index) => (
-                  <motion.div
-                    key={item.id}
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={inView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.5, delay: 0.1 + index * 0.06 }}
-                    className="flex-shrink-0 snap-start"
-                    style={{ width: "min(72vw, 280px)" }}
-                  >
-                    <div className="glass-card overflow-hidden h-full">
-                      <div className="relative aspect-[4/3] overflow-hidden" style={{ background: "rgba(0,0,0,0.02)" }}>
-                        {item.image_url ? (
-                          <img src={getImageUrl(item.image_url)} alt={item.name} className="h-full w-full object-cover" />
-                        ) : (
-                          <div className="flex h-full items-center justify-center text-4xl">🍡</div>
-                        )}
-                        {item.is_new && (
-                          <span className="absolute left-2.5 top-2.5 rounded-full px-2 py-0.5 text-[0.625rem] font-semibold text-white" style={{ background: "linear-gradient(135deg, #6B8F71, #4a7a52)" }}>
-                            جدید
-                          </span>
-                        )}
-                        {/* Bottom gradient overlay */}
-                        <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.35) 0%, transparent 50%)" }} />
-                        <div className="absolute bottom-0 left-0 right-0 p-3.5">
-                          <p className="text-[0.625rem] font-semibold text-white/70">{item.category_name}</p>
-                          <h3 className="mt-0.5 text-sm font-bold text-white">{item.name}</h3>
-                          <span className="mt-1 inline-block text-xs font-bold text-white">{formatPrice(item.price)}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Desktop grid */}
-              <div className="hidden sm:grid grid-cols-2 gap-5 lg:grid-cols-3">
-                {/* Hero card — large */}
-                {items[0] && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 24 }}
-                    animate={inView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.7, delay: 0.1 }}
-                    className="sm:col-span-2 lg:row-span-2"
-                  >
-                    <div className="glass-card group relative h-full overflow-hidden">
-                      <div className="relative aspect-[16/10] sm:aspect-auto sm:h-full overflow-hidden" style={{ background: "rgba(0,0,0,0.02)" }}>
-                        {items[0].image_url ? (
-                          <img src={getImageUrl(items[0].image_url)} alt={items[0].name} className="h-full w-full object-cover transition-transform duration-[800ms] group-hover:scale-105" />
-                        ) : (
-                          <div className="flex h-full min-h-[280px] items-center justify-center text-7xl">🍡</div>
-                        )}
-                        <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 50%)" }} />
-                        <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
-                          {items[0].is_new && (
-                            <span className="mb-3 inline-block rounded-full px-3 py-1 text-2xs font-semibold text-white" style={{ background: "linear-gradient(135deg, #6B8F71, #4a7a52)" }}>جدید</span>
-                          )}
-                          <p className="text-xs font-semibold" style={{ color: "rgba(255,255,255,0.7)" }}>{items[0].category_name}</p>
-                          <h3 className="mt-1 text-2xl font-bold text-white sm:text-3xl">{items[0].name}</h3>
-                          <p className="mt-2 max-w-md text-sm leading-relaxed text-white/60 line-clamp-2">{items[0].description}</p>
-                          <div className="mt-4 flex items-center gap-4">
-                            <span className="text-lg font-bold text-white">{formatPrice(items[0].price)}</span>
-                            <Link href={`/menu?category=${items[0].category_slug}`} className="rounded-full bg-white/15 px-4 py-1.5 text-xs font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/25">
-                              مشاهده
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-
-                {items.slice(1, 4).map((item, index) => (
-                  <motion.div
-                    key={item.id}
-                    initial={{ opacity: 0, y: 24 }}
-                    animate={inView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.7, delay: 0.2 + index * 0.08 }}
-                  >
-                    <div className="glass-card group h-full overflow-hidden">
-                      <div className="relative aspect-[4/3] overflow-hidden" style={{ background: "rgba(0,0,0,0.02)" }}>
-                        {item.image_url ? (
-                          <img src={getImageUrl(item.image_url)} alt={item.name} className="h-full w-full object-cover transition-transform duration-[800ms] group-hover:scale-105" />
-                        ) : (
-                          <div className="flex h-full items-center justify-center text-5xl">🍡</div>
-                        )}
-                        {item.is_new && (
-                          <span className="absolute left-3 top-3 rounded-full px-2.5 py-1 text-2xs font-semibold text-white" style={{ background: "linear-gradient(135deg, #6B8F71, #4a7a52)" }}>جدید</span>
-                        )}
-                      </div>
-                      <div className="p-5">
-                        <p className="text-2xs font-medium" style={{ color: "var(--matcha)" }}>{item.category_name}</p>
-                        <h3 className="mt-1 text-sm font-semibold" style={{ color: "var(--foreground)" }}>{item.name}</h3>
-                        <p className="mt-1.5 line-clamp-2 text-xs leading-relaxed" style={{ color: "var(--muted)" }}>{item.description}</p>
-                        <div className="mt-3 flex items-center justify-between">
-                          <span className="text-sm font-bold" style={{ color: "var(--matcha)" }}>{formatPrice(item.price)}</span>
-                          <Link href={`/menu?category=${item.category_slug}`} className="text-2xs font-medium transition-colors" style={{ color: "var(--muted)" }}
-                            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--matcha)")}
-                            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--muted)")}
-                          >مشاهده</Link>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Mobile: see all link */}
-              <div className="mt-6 text-center sm:hidden">
-                <Link href="/menu" className="btn-secondary">
-                  مشاهده کل منو →
-                </Link>
-              </div>
-            </>
-          )}
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mt-14 text-center sm:mt-16"
+        >
+          <Link href="/contact" className="btn-primary">
+            مشاوره و سفارش محصول
+          </Link>
+        </motion.div>
       </div>
     </section>
   );

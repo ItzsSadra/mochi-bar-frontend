@@ -2,7 +2,7 @@ export default function Skeleton({ className = "" }: { className?: string }) {
   return (
     <div
       className={`animate-pulse rounded-xl sm:rounded-2xl ${className}`}
-      style={{ background: "rgba(0,0,0,0.04)" }}
+      style={{ background: "rgba(255,255,255,0.04)" }}
       aria-hidden="true"
     />
   );
@@ -38,10 +38,13 @@ export function GallerySkeleton() {
 export function FeaturedSkeleton() {
   return (
     <>
-      {/* Mobile: horizontal scroll skeleton */}
       <div className="sm:hidden flex gap-3 overflow-x-auto pb-3 -mx-5 px-5 scrollbar-none">
         {Array.from({ length: 4 }).map((_, i) => (
-          <div key={i} className="flex-shrink-0 glass-card overflow-hidden" style={{ width: "min(72vw, 280px)" }}>
+          <div
+            key={i}
+            className="flex-shrink-0 glass-card overflow-hidden"
+            style={{ width: "min(72vw, 280px)" }}
+          >
             <Skeleton className="aspect-[4/3] rounded-none" />
             <div className="p-3 space-y-2">
               <Skeleton className="h-2.5 w-16 rounded-full" />
@@ -51,7 +54,6 @@ export function FeaturedSkeleton() {
           </div>
         ))}
       </div>
-      {/* Desktop: grid skeleton */}
       <div className="hidden sm:grid grid-cols-2 gap-5 lg:grid-cols-3">
         {Array.from({ length: 4 }).map((_, i) => (
           <MenuCardSkeleton key={i} />

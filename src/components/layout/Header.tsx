@@ -4,20 +4,19 @@ import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, useMotionValueEvent, useScroll } from "framer-motion";
-import { HiMenu, HiX, HiHome, HiCollection, HiPhotograph, HiInformationCircle, HiPhone } from "react-icons/hi";
+import { HiMenu, HiX, HiHome, HiCube, HiInformationCircle, HiPhone } from "react-icons/hi";
 
 const navLinks = [
   { href: "/", label: "خانه", icon: HiHome },
-  { href: "/menu", label: "منو", icon: HiCollection },
-  { href: "/gallery", label: "گالری", icon: HiPhotograph },
+  { href: "/products", label: "محصولات", icon: HiCube },
   { href: "/about", label: "درباره ما", icon: HiInformationCircle },
   { href: "/contact", label: "تماس", icon: HiPhone },
 ];
 
 const bottomNavLinks = [
   { href: "/", label: "خانه", icon: HiHome },
-  { href: "/menu", label: "منو", icon: HiCollection },
-  { href: "/gallery", label: "گالری", icon: HiPhotograph },
+  { href: "/products", label: "محصولات", icon: HiCube },
+  { href: "/about", label: "درباره ما", icon: HiInformationCircle },
   { href: "/contact", label: "تماس", icon: HiPhone },
 ];
 
@@ -39,7 +38,9 @@ export default function Header() {
     } else {
       document.body.style.overflow = "";
     }
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [isOpen]);
 
   return (
@@ -61,68 +62,79 @@ export default function Header() {
           <div className="flex h-16 items-center justify-between px-6">
             <Link href="/" className="flex items-center gap-3 group" onClick={close}>
               <motion.div
-                whileHover={{ rotate: 8, scale: 1.08 }}
+                whileHover={{ scale: 1.05, rotate: -2 }}
                 transition={{ type: "spring", stiffness: 400, damping: 15 }}
-                className="flex h-9 w-9 items-center justify-center rounded-[14px] text-lg text-white"
-                style={{ background: "linear-gradient(135deg, #6B8F71, #4a7a52)" }}
+                className="flex h-9 w-9 items-center justify-center rounded-[14px] text-sm font-bold text-white"
+                style={{
+                  background: "linear-gradient(135deg, #1E3A8A, #2563EB)",
+                  boxShadow: "0 4px 16px rgba(30,58,138,0.35)",
+                }}
               >
-                🍡
+                T
               </motion.div>
               <div>
-                <h1 className="text-sm font-bold leading-none" style={{ color: "var(--foreground)" }}>
-                  موچی بار
+                <h1
+                  className="text-sm font-bold leading-none"
+                  style={{ color: "var(--foreground)" }}
+                >
+                  تبارستان
                 </h1>
-                <p className="text-2xs mt-0.5 font-medium" style={{ color: "var(--muted)" }}>
-                  Mochi Café
+                <p
+                  className="text-2xs mt-0.5 font-medium"
+                  style={{ color: "var(--muted)" }}
+                >
+                  Tabarestan
                 </p>
               </div>
             </Link>
 
             <div className="flex items-center gap-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="relative rounded-full px-4 py-2 text-sm font-medium transition-colors duration-300"
-                  style={{ color: pathname === link.href ? "var(--matcha)" : "var(--muted)" }}
-                  onMouseEnter={(e) => {
-                    if (pathname !== link.href) {
-                      e.currentTarget.style.color = "var(--foreground)";
-                      e.currentTarget.style.background = "var(--matcha-light)";
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (pathname !== link.href) {
-                      e.currentTarget.style.color = "var(--muted)";
-                      e.currentTarget.style.background = "transparent";
-                    }
-                  }}
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="relative rounded-full px-4 py-2 text-sm font-medium transition-all duration-300"
+                    style={{
+                      color: isActive ? "var(--foreground)" : "var(--muted)",
+                      background: isActive ? "rgba(255,255,255,0.06)" : "transparent",
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isActive) {
+                        e.currentTarget.style.color = "var(--foreground)";
+                        e.currentTarget.style.background = "rgba(255,255,255,0.04)";
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isActive) {
+                        e.currentTarget.style.color = "var(--muted)";
+                        e.currentTarget.style.background = "transparent";
+                      }
+                    }}
+                  >
+                    {link.label}
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeNav"
+                        className="absolute bottom-0.5 left-1/2 h-0.5 -translate-x-1/2 rounded-full"
+                        style={{
+                          width: "1.25rem",
+                          background: "linear-gradient(90deg, #3B82F6, #60A5FA)",
+                        }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 500,
+                          damping: 35,
+                        }}
+                      />
+                    )}
+                  </Link>
+                );
+              })}
             </div>
 
-            <motion.button
-              whileTap={{ scale: 0.92 }}
-              onClick={() => setIsOpen(!isOpen)}
-              className="flex h-9 w-9 items-center justify-center rounded-full transition-colors sm:hidden"
-              style={{ color: "var(--muted)" }}
-              aria-expanded={isOpen}
-              aria-label={isOpen ? "بستن منو" : "باز کردن منو"}
-            >
-              <AnimatePresence mode="wait">
-                {isOpen ? (
-                  <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}>
-                    <HiX size={20} />
-                  </motion.div>
-                ) : (
-                  <motion.div key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}>
-                    <HiMenu size={20} />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.button>
+            <div className="w-9" />
           </div>
         </nav>
       </motion.header>
@@ -131,21 +143,28 @@ export default function Header() {
       <div className="mobile-only fixed top-0 left-0 right-0 z-50">
         <div
           className={`flex items-center justify-between px-4 transition-all duration-500 ${
-            scrolled
-              ? "glass-ultra shadow-glass-lg"
-              : "bg-transparent"
+            scrolled ? "glass-ultra shadow-glass-lg" : "bg-transparent"
           }`}
-          style={{ paddingTop: "env(safe-area-inset-top, 0px)", height: "3.25rem" }}
+          style={{
+            paddingTop: "env(safe-area-inset-top, 0px)",
+            height: "3.25rem",
+          }}
         >
           <Link href="/" className="flex items-center gap-2.5" onClick={close}>
             <div
-              className="flex h-8 w-8 items-center justify-center rounded-[10px] text-sm text-white"
-              style={{ background: "linear-gradient(135deg, #6B8F71, #4a7a52)" }}
+              className="flex h-8 w-8 items-center justify-center rounded-[10px] text-xs font-bold text-white"
+              style={{
+                background: "linear-gradient(135deg, #1E3A8A, #2563EB)",
+                boxShadow: "0 2px 8px rgba(30,58,138,0.3)",
+              }}
             >
-              🍡
+              T
             </div>
-            <span className="text-[0.8125rem] font-bold" style={{ color: "var(--foreground)" }}>
-              موچی بار
+            <span
+              className="text-[0.8125rem] font-bold"
+              style={{ color: "var(--foreground)" }}
+            >
+              تبارستان
             </span>
           </Link>
 
@@ -157,11 +176,23 @@ export default function Header() {
           >
             <AnimatePresence mode="wait">
               {isOpen ? (
-                <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}>
+                <motion.div
+                  key="close"
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
                   <HiX size={20} />
                 </motion.div>
               ) : (
-                <motion.div key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}>
+                <motion.div
+                  key="menu"
+                  initial={{ rotate: 90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: -90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
                   <HiMenu size={20} />
                 </motion.div>
               )}
@@ -175,11 +206,14 @@ export default function Header() {
         <div
           className="glass-ultra"
           style={{
-            borderTop: "0.5px solid var(--border-subtle)",
+            borderTop: "1px solid rgba(255,255,255,0.06)",
             paddingBottom: "env(safe-area-inset-bottom, 0px)",
           }}
         >
-          <nav className="flex items-center justify-around px-2" style={{ height: "3.5rem" }}>
+          <nav
+            className="flex items-center justify-around px-2"
+            style={{ height: "3.5rem" }}
+          >
             {bottomNavLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -193,20 +227,31 @@ export default function Header() {
                     <motion.div
                       layoutId="bottomNavIndicator"
                       className="absolute inset-0 rounded-2xl"
-                      style={{ background: "var(--matcha-light)" }}
-                      transition={{ type: "spring", stiffness: 500, damping: 35 }}
+                      style={{
+                        background: "rgba(59,130,246,0.1)",
+                        border: "1px solid rgba(59,130,246,0.12)",
+                      }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 500,
+                        damping: 35,
+                      }}
                     />
                   )}
                   <link.icon
                     size={19}
                     className="relative z-10"
-                    style={{ color: isActive ? "var(--matcha)" : "var(--muted)" }}
-                    fill={isActive ? "var(--matcha)" : "none"}
+                    style={{
+                      color: isActive ? "#60A5FA" : "var(--muted)",
+                    }}
+                    fill={isActive ? "#60A5FA" : "none"}
                     strokeWidth={isActive ? 0 : 1.5}
                   />
                   <span
                     className="relative z-10 text-[0.625rem] font-medium"
-                    style={{ color: isActive ? "var(--matcha)" : "var(--muted)" }}
+                    style={{
+                      color: isActive ? "#60A5FA" : "var(--muted)",
+                    }}
                   >
                     {link.label}
                   </span>
@@ -226,7 +271,11 @@ export default function Header() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
             className="fixed inset-0 z-40"
-            style={{ background: "rgba(0,0,0,0.35)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}
+            style={{
+              background: "rgba(7, 11, 20, 0.7)",
+              backdropFilter: "blur(20px)",
+              WebkitBackdropFilter: "blur(20px)",
+            }}
             onClick={close}
           >
             <motion.div
@@ -245,18 +294,28 @@ export default function Header() {
                       key={link.href}
                       initial={{ opacity: 0, x: -12 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.04 + i * 0.035, duration: 0.3 }}
+                      transition={{
+                        delay: 0.04 + i * 0.035,
+                        duration: 0.3,
+                      }}
                     >
                       <Link
                         href={link.href}
                         onClick={close}
                         className="flex items-center gap-3.5 rounded-2xl px-5 py-3.5 text-[0.9375rem] font-medium transition-colors"
                         style={{
-                          color: isActive ? "var(--matcha)" : "var(--foreground)",
-                          background: isActive ? "var(--matcha-light)" : "transparent",
+                          color: isActive ? "#60A5FA" : "var(--foreground)",
+                          background: isActive
+                            ? "rgba(59,130,246,0.1)"
+                            : "transparent",
                         }}
                       >
-                        <link.icon size={18} style={{ color: isActive ? "var(--matcha)" : "var(--muted)" }} />
+                        <link.icon
+                          size={18}
+                          style={{
+                            color: isActive ? "#60A5FA" : "var(--muted)",
+                          }}
+                        />
                         {link.label}
                       </Link>
                     </motion.div>

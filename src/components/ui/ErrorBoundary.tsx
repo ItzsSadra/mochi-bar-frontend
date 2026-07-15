@@ -31,10 +31,10 @@ export default class ErrorBoundary extends Component<Props, State> {
         <div className="flex min-h-[40vh] items-center justify-center px-5">
           <div className="text-center">
             <HiExclamationTriangle className="mx-auto text-4xl text-red-400" />
-            <h2 className="mt-4 text-lg font-bold text-gray-900 dark:text-white">
+            <h2 className="mt-4 text-lg font-bold" style={{ color: "var(--foreground)" }}>
               خطایی رخ داد
             </h2>
-            <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+            <p className="mt-2 text-sm" style={{ color: "var(--muted)" }}>
               متأسفانه مشکلی پیش آمده است. لطفاً دوباره تلاش کنید.
             </p>
             <button

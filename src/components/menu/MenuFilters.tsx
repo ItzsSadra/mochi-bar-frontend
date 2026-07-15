@@ -20,14 +20,14 @@ export default function MenuFilters({
   return (
     <div className="space-y-3 sm:space-y-4">
       <div className="relative max-w-sm">
-          <input
-            type="text"
-            placeholder="جستجو در منو..."
-            value={search}
-            onChange={(e) => onSearchChange(e.target.value)}
-            className="input-field pl-10"
-            aria-label="جستجو در منو"
-          />
+        <input
+          type="text"
+          placeholder="جستجو در محصولات..."
+          value={search}
+          onChange={(e) => onSearchChange(e.target.value)}
+          className="input-field pl-10"
+          aria-label="جستجو در محصولات"
+        />
         <svg
           className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2"
           style={{ color: "var(--muted)" }}
@@ -36,7 +36,11 @@ export default function MenuFilters({
           stroke="currentColor"
           strokeWidth={2}
         >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+          />
         </svg>
       </div>
 
@@ -46,9 +50,15 @@ export default function MenuFilters({
           onClick={() => onCategoryChange("")}
           className="flex-shrink-0 rounded-full px-4 py-2 text-[0.75rem] sm:text-xs font-medium transition-all duration-300"
           style={{
-            background: selectedCategory === "" ? "#6B8F71" : "rgba(0,0,0,0.04)",
+            background:
+              selectedCategory === ""
+                ? "linear-gradient(135deg, #1E3A8A, #2563EB)"
+                : "rgba(255,255,255,0.06)",
             color: selectedCategory === "" ? "#fff" : "var(--muted)",
-            boxShadow: selectedCategory === "" ? "0 2px 8px rgba(107,143,113,0.25)" : "none",
+            boxShadow:
+              selectedCategory === ""
+                ? "0 2px 8px rgba(30,58,138,0.3)"
+                : "none",
           }}
         >
           همه
@@ -59,9 +69,16 @@ export default function MenuFilters({
             onClick={() => onCategoryChange(cat.slug)}
             className="flex-shrink-0 rounded-full px-4 py-2 text-[0.75rem] sm:text-xs font-medium transition-all duration-300"
             style={{
-              background: selectedCategory === cat.slug ? "#6B8F71" : "rgba(0,0,0,0.04)",
-              color: selectedCategory === cat.slug ? "#fff" : "var(--muted)",
-              boxShadow: selectedCategory === cat.slug ? "0 2px 8px rgba(107,143,113,0.25)" : "none",
+              background:
+                selectedCategory === cat.slug
+                  ? "linear-gradient(135deg, #1E3A8A, #2563EB)"
+                  : "rgba(255,255,255,0.06)",
+              color:
+                selectedCategory === cat.slug ? "#fff" : "var(--muted)",
+              boxShadow:
+                selectedCategory === cat.slug
+                  ? "0 2px 8px rgba(30,58,138,0.3)"
+                  : "none",
             }}
           >
             {cat.icon && <span className="ml-1">{cat.icon}</span>}

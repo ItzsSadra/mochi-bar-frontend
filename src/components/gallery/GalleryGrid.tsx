@@ -23,7 +23,7 @@ export default function GalleryGrid({ images }: GalleryGridProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.03, duration: 0.4 }}
             className="group cursor-pointer overflow-hidden rounded-2xl sm:rounded-3xl"
-            style={{ border: "0.5px solid var(--border-subtle)" }}
+            style={{ border: "1px solid var(--border)" }}
             role="button"
             tabIndex={0}
             onClick={() => setSelected(image)}

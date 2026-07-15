@@ -60,9 +60,9 @@ function MenuContent() {
             transition={{ duration: 0.5 }}
             className="text-center"
           >
-            <h1 className="section-title">منوی ما</h1>
+            <h1 className="section-title">محصولات ما</h1>
             <p className="section-subtitle">
-              انتخاب کنید از میان بهترین نوشیدنی‌ها و دسرها
+              انتخاب کنید از میان بهترین میوه خشک‌ها و نوشیدنی‌ها
             </p>
           </motion.div>
 
@@ -85,7 +85,7 @@ function MenuContent() {
               </div>
             ) : items.length === 0 ? (
               <div className="py-16 sm:py-20 text-center">
-                <p className="text-4xl sm:text-5xl">🍵</p>
+                <p className="text-4xl sm:text-5xl">📦</p>
                 <p className="mt-3 text-[0.8125rem] sm:text-sm" style={{ color: "var(--muted)" }}>
                   آیتمی یافت نشد
                 </p>
